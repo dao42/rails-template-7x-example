@@ -1,2 +1,35 @@
-@use 'bootstrap_custom';
-@use 'fontawsome_custom';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the main application layout */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md transition-colors duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-indigo-600 text-white hover:bg-indigo-700;
+  }
+  
+  .btn-secondary {
+    @apply bg-white border border-gray-300 text-gray-700 hover:bg-gray-50;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-lg p-6;
+  }
+  
+  .form-input {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+  }
+}
+
+/* Additional global styles */
+body {
+  @apply antialiased text-gray-800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}

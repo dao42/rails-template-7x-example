@@ -1,40 +1,72 @@
 <% content_for :title, 'Log in' %>
 
-<main>
-  <section class="content-messages">
-    <%= render 'shared/admin/flash_messages' %>
-  </section>
-  <section class="content">
-    <div class="login-box">
-      <div class="login-logo">
-        <span>
-          Admin Dashboard
+<div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+  <div class="flex flex-wrap items-center">
+    <div class="hidden w-full xl:block xl:w-1/2">
+      <div class="py-17.5 px-26 text-center">
+        <span class="mb-5.5 inline-block">
+          <%= image_tag 'logo.png', class: 'h-16 w-16 mx-auto' %>
         </span>
-      </div>
-      <div class="card">
-        <div class="card-body login-card-body">
-          <p class="login-box-msg">Log in</p>
-          <%= form_tag admin_login_path do %>
-            <div class="input-group mb-3">
-              <%= text_field_tag :name, nil, placeholder: 'Username', class: 'form-control' %>
-              <div class="input-group-append input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <%= password_field_tag :password, nil, placeholder: 'Password', class: 'form-control' %>
-              <div class="input-group-append input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
-                <%= submit_tag 'Log in', class: 'btn btn-primary btn-block btn-flat' %>
-              </div>
-            </div>
-          <% end %>
-        </div>
+
+        <p class="2xl:px-20">
+          Admin Dashboard - Secure login to access your administrative panel
+        </p>
       </div>
     </div>
-  </section>
-</main>
+
+    <div class="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+      <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
+        <span class="mb-1.5 block font-medium">Start for free</span>
+        <h2 class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+          Sign In to Admin Dashboard
+        </h2>
+
+        <%= render 'shared/admin/flash_messages' %>
+
+        <%= form_tag admin_login_path, class: "space-y-6" do %>
+          <div>
+            <label class="mb-2.5 block font-medium text-black dark:text-white">
+              Username
+            </label>
+            <div class="relative">
+              <%= text_field_tag :name, nil, 
+                  placeholder: 'Enter your username', 
+                  class: 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' %>
+              <span class="absolute right-4 top-4">
+                <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.5">
+                    <path d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-2.5 block font-medium text-black dark:text-white">
+              Password
+            </label>
+            <div class="relative">
+              <%= password_field_tag :password, nil, 
+                  placeholder: 'Enter your password', 
+                  class: 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' %>
+              <span class="absolute right-4 top-4">
+                <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.5">
+                    <path d="M16.1547 6.80626V5.91251C16.1547 3.16251 14.0922 0.825009 11.4797 0.825009C8.86719 0.825009 6.80469 3.16251 6.80469 5.91251V6.80626C3.84844 7.18751 1.5 9.78126 1.5 12.9750V17.3688C1.5 20.8063 4.19219 23.4985 7.62969 23.4985H15.3703C18.8078 23.4985 21.5 20.8063 21.5 17.3688V12.9750C21.5 9.78126 19.1516 7.18751 16.1547 6.80626ZM8.25781 5.91251C8.25781 4.13751 9.70312 2.69219 11.4781 2.69219C13.2531 2.69219 14.6984 4.13751 14.6984 5.91251V6.80626C13.0687 6.80626 12.2578 6.80626 8.25781 6.80626V5.91251ZM19.9453 17.3688C19.9453 19.9531 17.9547 21.9438 15.3703 21.9438H7.62969C5.04531 21.9438 3.05469 19.9531 3.05469 17.3688V12.9750C3.05469 10.3906 5.04531 8.40001 7.62969 8.40001H15.3703C17.9547 8.40001 19.9453 10.3906 19.9453 12.9750V17.3688Z" fill=""/>
+                    <path d="M11.4797 14.25C10.4109 14.25 9.5 15.1609 9.5 16.2297C9.5 17.2984 10.4109 18.2094 11.4797 18.2094C12.5484 18.2094 13.4594 17.2984 13.4594 16.2297C13.4594 15.1609 12.5484 14.25 11.4797 14.25Z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <%= submit_tag 'Sign In', 
+                class: 'w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

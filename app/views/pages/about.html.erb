@@ -1,10 +1,40 @@
-<div class="container text-center">
-  <p></p>
-  <h1>About Page</h1>
-  <hr>
-  <p>This is an example for about page, using `high_voltage`</p>
-  <br>
-  <br>
-  <br>
-  <%= link_to 'Back to Home', root_path %>
+<div class="flex flex-col items-center justify-center py-16">
+  <h1 class="text-5xl font-bold text-gray-800 mb-6">About Page</h1>
+  <div class="w-16 h-1 bg-indigo-500 my-4"></div>
+  
+  <p class="text-lg text-gray-600 mb-12 max-w-2xl text-center">
+    This is an example about page, using <code class="bg-gray-100 px-2 py-1 rounded text-indigo-600 font-mono">high_voltage</code> and styled with Tailwind CSS.
+  </p>
+  
+  <div class="bg-white rounded-lg shadow-lg p-8 mb-12 max-w-2xl">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Project Features</h3>
+    <ul class="space-y-2">
+      <li class="flex items-center">
+        <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>Modern user interface with Tailwind CSS</span>
+      </li>
+      <li class="flex items-center">
+        <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>Responsive layout for all devices</span>
+      </li>
+      <li class="flex items-center">
+        <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>Clean and maintainable code structure</span>
+      </li>
+    </ul>
+  </div>
+  
+  <%= link_to root_path, 
+      class: "inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-300" do %>
+    <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    <span>Back to Home</span>
+  <% end %>
 </div>

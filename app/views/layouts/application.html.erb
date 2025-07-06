@@ -24,9 +24,9 @@
     <!-- <%= javascript_tag 'ga', 'data-turbo-track': 'reload' %> -->
     <%= favicon_link_tag asset_path("favicon.ico") %>
   </head>
-  <body class="<%= body_class %>">
-    <main>
-      <div class="container">
+  <body class="<%= body_class %> bg-gray-50 min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+      <div class="max-w-7xl mx-auto">
         <%= yield %>
       </div>
     </main>

@@ -60,7 +60,6 @@ Default password: admin
 * figaro
 * postgres
 * slim
-* simple_form
 * high_voltage
 * active_storage
 * sidekiq

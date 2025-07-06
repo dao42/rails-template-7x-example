@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -20,31 +20,61 @@
     <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_include_tag 'admin', 'data-turbo-track': Rails.env.production? ? "reload" : "", type: "module" %>
     <%= favicon_link_tag asset_path("favicon.ico") %>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script>
+      // 防止页面闪烁的暗色模式初始化
+      (function() {
+        const darkMode = localStorage.getItem('darkMode');
+        if (darkMode === 'true' || (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
-  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary app-loaded sidebar-open admin-page <%= body_class %>">
+  <body class="font-satoshi font-normal text-base text-body bg-whiten dark:bg-boxdark-2 dark:text-bodydark relative z-1 <%= body_class %>">
     <%- if @full_render %>
       <%= yield %>
     <%- else %>
-      <div class="app-wrapper">
-        <%= render 'shared/admin/header' %>
+      <!-- ===== Page Wrapper Start ===== -->
+      <div class="flex h-screen overflow-hidden" 
+           x-data="{ 
+             sidebarOpen: false, 
+             darkMode: localStorage.getItem('darkMode') === 'true' || (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches),
+             toggleDarkMode() {
+               this.darkMode = !this.darkMode;
+               localStorage.setItem('darkMode', this.darkMode);
+               if (this.darkMode) {
+                 document.documentElement.classList.add('dark');
+               } else {
+                 document.documentElement.classList.remove('dark');
+               }
+             }
+           }"
+           x-init="
+             if (darkMode) {
+               document.documentElement.classList.add('dark');
+             } else {
+               document.documentElement.classList.remove('dark');
+             }
+           ">
         <%= render 'shared/admin/sidebar' %>
-        <main class="app-main">
-          <div class="content-messages">
-            <%= render 'shared/admin/flash_messages' %>
-          </div>
-          <div class="app-content-header">
-          </div>
-          <div class="app-content">
-            <%= yield %>
-          </div>
-        </main>
-        <div class="app-footer" data-controller="admin-hello">
-          <div class="float-end d-none d-sm-inline">
-            Anything you want
-          </div>
-          <strong data-admin-hello-target="hello"></strong>
+        
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          <%= render 'shared/admin/header' %>
+          
+          <!-- ===== Main Content Start ===== -->
+          <main>
+            <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+              <%= render 'shared/admin/flash_messages' %>
+              <%= yield %>
+            </div>
+          </main>
+          <!-- ===== Main Content End ===== -->
         </div>
+        <!-- ===== Content Area End ===== -->
       </div>
+      <!-- ===== Page Wrapper End ===== -->
     <%- end %>
   </body>
 </html>

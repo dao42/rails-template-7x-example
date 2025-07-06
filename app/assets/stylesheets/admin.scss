@@ -1,16 +1,132 @@
-@use 'fontawsome_custom';
-@use 'bootstrap_custom';
-@use 'admin-lte/dist/css/adminlte';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.main-sidebar {
-  li.nav-item {
-    width: 100%;
-    a {
-      text-overflow: ellipsis;
-    }
+/* TailAdmin specific colors and styles */
+@layer utilities {
+  .text-body {
+    color: #64748B;
+  }
+  
+  .bg-whiten {
+    background-color: #F1F5F9;
+  }
+  
+  .text-bodydark {
+    color: #AEB7C0;
+  }
+  
+  .text-bodydark1 { 
+    color: #DEE4EE;
+  }
+  
+  .text-bodydark2 {
+    color: #8A99AF;
+  }
+  
+  .bg-graydark {
+    background-color: #333A48;
+  }
+  
+  .bg-boxdark {
+    background-color: #24303F;
+  }
+  
+  .border-stroke {
+    border-color: #E2E8F0;
+  }
+  
+  .border-strokedark {
+    border-color: #2E3A47;
+  }
+  
+  .shadow-default {
+    box-shadow: 0px 8px 13px -3px rgba(0, 0, 0, 0.07);
+  }
+  
+  .drop-shadow-1 {
+    filter: drop-shadow(0px 1px 0px #E2E8F0);
+  }
+  
+  .text-primary {
+    color: #3C50E0;
+  }
+  
+  .hover\:text-primary:hover {
+    color: #3C50E0;
+  }
+  
+  .z-999 {
+    z-index: 999;
+  }
+  
+  .z-99999 {
+    z-index: 99999;
+  }
+  
+  .z-9999 {
+    z-index: 9999;
+  }
+  
+  .w-72\.5 {
+    width: 18.125rem;
+  }
+  
+  .w-62\.5 {
+    width: 15.625rem;
+  }
+  
+  .h-5\.5 {
+    height: 1.375rem;
+  }
+  
+  .w-5\.5 {
+    width: 1.375rem;
+  }
+  
+  .py-5\.5 {
+    padding-top: 1.375rem;
+    padding-bottom: 1.375rem;
+  }
+  
+  .py-6\.5 {
+    padding-top: 1.625rem;
+    padding-bottom: 1.625rem;
+  }
+  
+  .py-7\.5 {
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+  }
+  
+  .gap-7\.5 {
+    gap: 1.875rem;
+  }
+  
+  .left-2\.5 {
+    left: 0.625rem;
+  }
+  
+  .top-2\.5 {
+    top: 0.625rem;
+  }
+  
+  .bg-meta-4 {
+    background-color: #313D4A;
   }
 }
 
-.login-box {
-  margin: 7% auto;
+/* Additional custom styles */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Font family */
+.font-satoshi {
+  font-family: "Satoshi", sans-serif;
 }

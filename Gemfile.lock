@@ -342,9 +342,6 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
-    simple_form (4.1.0)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
     slim (5.2.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
@@ -415,7 +412,6 @@ DEPENDENCIES
   rubocop-rails-omakase
   selenium-webdriver
   sidekiq (~> 7)
-  simple_form (~> 4.1)
   slim-rails
   tzinfo-data
   web-console

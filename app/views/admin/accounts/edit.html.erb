@@ -1,22 +1,231 @@
 <% content_for :title do %>
-  Account Setting
+  Account Settings
 <% end %>
 
-<div class="card card-primary">
-  <div class="card-header with-border">
-    <h3 class="card-title">
-      Edit Account
-    </h3>
-  </div>
-  <%= simple_form_for current_admin, url: admin_account_path do |f| %>
-    <div class="card-body">
-      <%= f.input :name, label: 'Administrator Name' %>
-      <%= f.input :current_password, label: 'Current Password', required: true %>
-      <%= f.input :password, label: 'New Password( Blank if not modify )' %>
-      <%= f.input :password_confirmation, label: 'Confirm New Password' %>
-    </div>
-    <div class="card-footer">
-      <%= f.submit 'Update Account', class: 'btn btn-primary' %>
-    </div>
-  <% end %>
+<!-- Breadcrumb Start -->
+<div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+  <h2 class="text-title-md2 font-bold text-black dark:text-white">
+    Account Settings
+  </h2>
+  <nav>
+    <ol class="flex items-center gap-2">
+      <li>
+        <%= link_to admin_root_path, class: "font-medium text-primary hover:text-primary/80" do %>
+          Dashboard
+        <% end %>
+      </li>
+      <li class="text-primary">/</li>
+      <li class="font-medium text-primary">Account Settings</li>
+    </ol>
+  </nav>
 </div>
+<!-- Breadcrumb End -->
+
+<!-- Account Settings Card Start -->
+<div class="grid grid-cols-1 gap-9 sm:grid-cols-2">
+  <div class="flex flex-col gap-9">
+    <!-- Personal Information -->
+    <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div class="border-b border-stroke px-7 py-4 dark:border-strokedark">
+        <h3 class="font-medium text-black dark:text-white">
+          Personal Information
+        </h3>
+      </div>
+      <div class="p-7">
+        <%= form_with model: current_admin, url: admin_account_path, html: { class: "space-y-6" } do |f| %>
+          <!-- Name Field -->
+          <div class="group">
+            <%= f.label :name, class: "mb-3 block text-sm font-medium text-black dark:text-white" do %>
+              Full Name <span class="text-meta-1">*</span>
+            <% end %>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-body dark:text-bodydark z-10">
+                <svg class="fill-current" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.72039 12.887C4.50179 12.1056 5.5616 11.6666 6.66667 11.6666H13.3333C14.4384 11.6666 15.4982 12.1056 16.2796 12.887C17.061 13.6684 17.5 14.7282 17.5 15.8333V17.5C17.5 17.9602 17.1269 18.3333 16.6667 18.3333C16.2064 18.3333 15.8333 17.9602 15.8333 17.5V15.8333C15.8333 15.1703 15.5699 14.5344 15.1011 14.0656C14.6323 13.5968 13.9964 13.3333 13.3333 13.3333H6.66667C6.00363 13.3333 5.36774 13.5968 4.8989 14.0656C4.43006 14.5344 4.16667 15.1703 4.16667 15.8333V17.5C4.16667 17.9602 3.79357 18.3333 3.33333 18.3333C2.8731 18.3333 2.5 17.9602 2.5 17.5V15.8333C2.5 14.7282 2.93899 13.6684 3.72039 12.887Z" fill=""/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 3.33329C8.61896 3.33329 7.49967 4.45258 7.49967 5.83329C7.49967 7.214 8.61896 8.33329 9.99967 8.33329C11.3804 8.33329 12.4997 7.214 12.4997 5.83329C12.4997 4.45258 11.3804 3.33329 9.99967 3.33329ZM5.83301 5.83329C5.83301 3.53215 7.69853 1.66663 9.99967 1.66663C12.3008 1.66663 14.1663 3.53215 14.1663 5.83329C14.1663 8.13444 12.3008 9.99996 9.99967 9.99996C7.69853 9.99996 5.83301 8.13444 5.83301 5.83329Z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+              <%= f.text_field :name, 
+                  placeholder: "Enter your full name", 
+                  class: "w-full rounded border border-stroke bg-gray py-3 pl-12 pr-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary transition-colors duration-200 #{current_admin.errors[:name].any? ? 'border-meta-1 dark:border-meta-1' : ''}" %>
+            </div>
+            <% if current_admin.errors[:name].any? %>
+              <p class="mt-2 text-sm text-meta-1 flex items-center">
+                <svg class="mr-1.5 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <%= current_admin.errors[:name].first %>
+              </p>
+            <% end %>
+          </div>
+
+          <!-- Current Password Field -->
+          <div class="group">
+            <%= f.label :current_password, class: "mb-3 block text-sm font-medium text-black dark:text-white" do %>
+              Current Password <span class="text-meta-1">*</span>
+            <% end %>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-body dark:text-bodydark z-10">
+                <svg class="fill-current" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+              <%= f.password_field :current_password, 
+                  placeholder: "Enter current password", 
+                  class: "w-full rounded border border-stroke bg-gray py-3 pl-12 pr-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary transition-colors duration-200 #{current_admin.errors[:current_password].any? ? 'border-meta-1 dark:border-meta-1' : ''}" %>
+            </div>
+            <p class="mt-2 text-sm text-body dark:text-bodydark">
+              Required for security verification
+            </p>
+            <% if current_admin.errors[:current_password].any? %>
+              <p class="mt-2 text-sm text-meta-1 flex items-center">
+                <svg class="mr-1.5 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <%= current_admin.errors[:current_password].first %>
+              </p>
+            <% end %>
+          </div>
+
+          <!-- New Password Field -->
+          <div class="group">
+            <%= f.label :password, class: "mb-3 block text-sm font-medium text-black dark:text-white" do %>
+              New Password
+            <% end %>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-body dark:text-bodydark z-10">
+                <svg class="fill-current" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+              <%= f.password_field :password, 
+                  placeholder: "Enter new password (optional)", 
+                  class: "w-full rounded border border-stroke bg-gray py-3 pl-12 pr-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary transition-colors duration-200 #{current_admin.errors[:password].any? ? 'border-meta-1 dark:border-meta-1' : ''}" %>
+            </div>
+            <p class="mt-2 text-sm text-body dark:text-bodydark">
+              Leave blank to keep current password
+            </p>
+            <% if current_admin.errors[:password].any? %>
+              <p class="mt-2 text-sm text-meta-1 flex items-center">
+                <svg class="mr-1.5 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <%= current_admin.errors[:password].first %>
+              </p>
+            <% end %>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="group">
+            <%= f.label :password_confirmation, class: "mb-3 block text-sm font-medium text-black dark:text-white" do %>
+              Confirm New Password
+            <% end %>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-body dark:text-bodydark z-10">
+                <svg class="fill-current" width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" fill=""/>
+                  </g>
+                </svg>
+              </span>
+              <%= f.password_field :password_confirmation, 
+                  placeholder: "Confirm your new password", 
+                  class: "w-full rounded border border-stroke bg-gray py-3 pl-12 pr-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary transition-colors duration-200 #{current_admin.errors[:password_confirmation].any? ? 'border-meta-1 dark:border-meta-1' : ''}" %>
+            </div>
+            <% if current_admin.errors[:password_confirmation].any? %>
+              <p class="mt-2 text-sm text-meta-1 flex items-center">
+                <svg class="mr-1.5 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <%= current_admin.errors[:password_confirmation].first %>
+              </p>
+            <% end %>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col gap-4 pt-6 sm:flex-row sm:justify-end">
+            <%= link_to admin_root_path, 
+                class: "flex justify-center rounded border border-stroke bg-gray px-6 py-2 text-black transition hover:bg-opacity-80 dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:bg-opacity-80" do %>
+              <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              Cancel
+            <% end %>
+            <%= f.submit "Update Account", 
+                class: "flex justify-center rounded bg-primary px-6 py-2 font-medium text-white transition hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Information Card -->
+  <div class="flex flex-col gap-9">
+    <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div class="border-b border-stroke px-7 py-4 dark:border-strokedark">
+        <h3 class="font-medium text-black dark:text-white">
+          Security Information
+        </h3>
+      </div>
+      <div class="p-7">
+        <div class="space-y-6">
+          <!-- Account Status -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-meta-3/10">
+                <svg class="h-5 w-5 text-meta-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-black dark:text-white">Account Status</p>
+                <p class="text-sm text-body dark:text-bodydark">Your account is active</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center rounded-full bg-meta-3/10 px-3 py-1 text-sm font-medium text-meta-3">
+              Active
+            </span>
+          </div>
+
+          <!-- Login Activity -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-black dark:text-white">Last Login</p>
+                <p class="text-sm text-body dark:text-bodydark">Today at <%= Time.current.strftime("%H:%M") %></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Strength -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-warning/10">
+                <svg class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-black dark:text-white">Password Security</p>
+                <p class="text-sm text-body dark:text-bodydark">Update regularly for better security</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Account Settings Card End -->

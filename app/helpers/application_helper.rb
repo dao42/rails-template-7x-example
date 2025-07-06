@@ -43,4 +43,36 @@ module ApplicationHelper
     when 'alert', 'error' then 'alert alert-danger alert-dismissible'
     end
   end
+  
+  # TailAdmin flash message class helper
+  def flash_tailwind_class(level)
+    case level.to_sym
+    when :notice, :success
+      'border-success-300 bg-success-50 dark:border-success-300 dark:bg-success-900 text-success-500'
+    when :info
+      'border-info-300 bg-info-50 dark:border-info-300 dark:bg-info-900 text-info-500'
+    when :warning
+      'border-warning-300 bg-warning-50 dark:border-warning-300 dark:bg-warning-900 text-warning-500'
+    when :alert, :error
+      'border-danger-300 bg-danger-50 dark:border-danger-300 dark:bg-danger-900 text-danger-500'
+    else
+      'border-primary-300 bg-primary-50 dark:border-primary-300 dark:bg-primary-900 text-primary-500'
+    end
+  end
+  
+  # Flash message title helper
+  def flash_title(level)
+    case level.to_sym
+    when :notice, :success
+      'Success!'
+    when :info
+      'Information'
+    when :warning
+      'Warning!'
+    when :alert, :error
+      'Error!'
+    else
+      'Notification'
+    end
+  end
 end
