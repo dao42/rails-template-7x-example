@@ -55,11 +55,10 @@ Default password: admin
 ## Tech stack
 
 * Ruby on Rails 7.x
-* bootstrap 4
-* font-awesome 5
+* tailwind
+* tailadmin
 * figaro
 * postgres
-* slim
 * high_voltage
 * active_storage
 * sidekiq
@@ -67,7 +66,6 @@ Default password: admin
 * mina
 * puma
 * rspec
-* adminlte 3
 
 ## Built with
 

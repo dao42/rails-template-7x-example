@@ -23,7 +23,6 @@ group :test do
 end
 gem "pg", ">= 1.1"
 gem "figaro"
-gem "slim-rails"
 gem "high_voltage", "~> 3.1"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
