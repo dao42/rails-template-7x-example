@@ -11,7 +11,6 @@ RailsUjs.start()
 ActiveStorage.start()
 
 import './channels'
-import "./controllers"
 
 // Optional: Custom JavaScript for Tailwind-based UI
 document.addEventListener('turbo:load', () => {
