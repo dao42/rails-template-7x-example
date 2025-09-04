@@ -4,12 +4,10 @@ bin/dev (Do not use `rails s` directly, as it may cause js/css loading issues)
 
 ### The project uses the following tech stack:
 
-Ruby on Rails 7.0
-Bootstrap 4
-Font-Awesome 5
+Ruby on Rails 7.2
+Tailwind CSS
 Figaro
 PostgreSQL
-Slim
 Simple_Form
 High_Voltage
 Active_Storage
@@ -18,12 +16,10 @@ Kaminari
 Mina
 Puma
 RSpec
-AdminLTE 4
+
 Do not add or remove any components and avoid upgrading or downgrading components lightly.
 
 ### Project Standards:
 
 Use yarn instead of npm
 Use PostgreSQL instead of sqlite3
-
-After run build assets command for testing, You must clear it.
