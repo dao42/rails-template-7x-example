@@ -7,7 +7,6 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
 require 'mina/puma'
-require "mina_sidekiq/tasks"
 require 'mina/logs'
 require 'mina/multistage'
 
@@ -16,7 +15,6 @@ set :shared_dirs, fetch(:shared_dirs, []).push('log', 'public/uploads', 'public/
 set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/application.yml')
 
 set :puma_config, ->{ "#{fetch(:current_path)}/config/puma.rb" }
-set :sidekiq_pid, ->{ "#{fetch(:shared_path)}/tmp/pids/sidekiq.pid" }
 
 task :remote_environment do
   invoke :'rbenv:load'
@@ -77,9 +75,7 @@ task :deploy do
 
     on :launch do
       invoke :'rbenv:load'
-      invoke :'sidekiq:quiet'
       invoke :'puma:smart_restart'
-      invoke :'sidekiq:restart'
     end
   end
 end

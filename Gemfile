@@ -11,7 +11,6 @@ gem "high_voltage", "~> 3.1"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft", "~> 1.1.0"
-gem "sidekiq", "~> 7"
 gem "bcrypt"
 gem "kaminari"
 gem "rails-i18n", "~> 7.0.10"
@@ -19,7 +18,6 @@ gem 'mini_magick', '~> 5.3', '>= 5.3.1'
 gem "mina", "~> 1.2.2", require: false
 gem "mina-ng-puma", ">= 1.4.0", require: false
 gem "mina-multistage", require: false
-gem "mina-sidekiq", require: false
 gem "mina-logs", require: false
 
 group :development do

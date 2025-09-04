@@ -1,5 +1,3 @@
-require 'sidekiq/web'
-
 class AdminConstraint
   def matches?(request)
     return false unless request.session[:current_admin_id].present?
@@ -21,7 +19,6 @@ Rails.application.routes.draw do
 
   # write your routes here
 
-  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
   mount ActionCable.server => '/cable'
   root to: 'home#index'
 end

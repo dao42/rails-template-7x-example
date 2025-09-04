@@ -61,7 +61,6 @@ Default password: admin
 * postgres
 * high_voltage
 * active_storage
-* sidekiq
 * kaminari
 * mina
 * puma
