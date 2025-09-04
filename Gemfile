@@ -5,22 +5,6 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 gem "bootsnap", require: false
 
-group :development, :test do
-  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
-  gem "brakeman", require: false
-  gem "rubocop-rails-omakase", require: false
-end
-
-group :development do
-  gem "web-console"
-  gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]
-  gem "listen"
-end
-
-group :test do
-  gem "capybara"
-  gem "selenium-webdriver"
-end
 gem "pg", ">= 1.1"
 gem "figaro"
 gem "high_voltage", "~> 3.1"
@@ -38,15 +22,22 @@ gem "mina-sidekiq", require: false
 gem "mina-logs", require: false
 
 group :development do
-  gem "rails_apps_testing"
+  gem "web-console"
+  gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]
+  gem "listen"
 end
 
 group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
+  gem "brakeman", require: false
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :test do
   gem "database_cleaner"
   gem "launchy"
+  gem "capybara"
+  gem "selenium-webdriver"
 end
