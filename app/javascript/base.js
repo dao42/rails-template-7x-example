@@ -1,34 +1,32 @@
 // base dependency library, it should be only shared by `admin.js` and `application.js`.
 //
-import RailsUjs from '@rails/ujs'
-import "@hotwired/turbo-rails"
 import * as ActiveStorage from '@rails/activestorage'
 import 'alpinejs'
 
 Turbo.session.drive = false
 
-RailsUjs.start()
 ActiveStorage.start()
 
-import './channels'
+import * as ActionCable from "@rails/actioncable"
+window.ActionCable = ActionCable
 
 // Optional: Custom JavaScript for Tailwind-based UI
-document.addEventListener('turbo:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   // Initialize any custom components here
-  
+
   // Mobile menu toggle
   const mobileMenuButton = document.querySelector('[data-mobile-menu]');
   const mobileMenu = document.querySelector('[data-mobile-menu-target]');
-  
+
   if (mobileMenuButton && mobileMenu) {
     mobileMenuButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
   }
-  
+
   // Dropdown functionality (if not using Alpine.js)
   const dropdownButtons = document.querySelectorAll('[data-dropdown]');
-  
+
   dropdownButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       e.stopPropagation();
