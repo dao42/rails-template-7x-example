@@ -15,6 +15,7 @@ gem "sidekiq", "~> 7"
 gem "bcrypt"
 gem "kaminari"
 gem "rails-i18n", "~> 7.0.10"
+gem 'mini_magick', '~> 5.3', '>= 5.3.1'
 gem "mina", "~> 1.2.2", require: false
 gem "mina-ng-puma", ">= 1.4.0", require: false
 gem "mina-multistage", require: false

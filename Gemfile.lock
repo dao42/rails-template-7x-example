@@ -188,6 +188,8 @@ GEM
       puma (>= 2.13)
     mina-sidekiq (1.1.0)
       mina (>= 1.0.2)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
@@ -395,6 +397,7 @@ DEPENDENCIES
   mina-multistage
   mina-ng-puma (>= 1.4.0)
   mina-sidekiq
+  mini_magick (~> 5.3, >= 5.3.1)
   pg (>= 1.1)
   propshaft (~> 1.1.0)
   puma (>= 5.0)
