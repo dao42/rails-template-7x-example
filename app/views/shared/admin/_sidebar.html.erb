@@ -1,5 +1,5 @@
 <!-- ===== Sidebar Start ===== -->
-<aside 
+<aside
   x-data="{ sidebarOpen: false }"
   :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
   class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-boxdark duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
@@ -16,7 +16,7 @@
       </div>
       <span class="text-xl font-semibold text-white">Dashboard</span>
     <% end %>
-    
+
     <button
       class="block lg:hidden"
       @click.stop="sidebarOpen = !sidebarOpen"
@@ -48,7 +48,7 @@
         <ul class="mb-6 flex flex-col gap-2">
           <!-- Dashboard -->
           <li>
-            <%= link_to admin_root_path, 
+            <%= link_to admin_root_path,
                 class: "group relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark #{admin_active_for(admin_root_path, current_path) ? 'bg-graydark' : ''}" do %>
               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.10322 0.956299H2.53135C1.5751 0.956299 0.787598 1.7438 0.787598 2.70005V6.27192C0.787598 7.22817 1.5751 8.01567 2.53135 8.01567H6.10322C7.05947 8.01567 7.84697 7.22817 7.84697 6.27192V2.72817C7.8751 1.7438 7.0876 0.956299 6.10322 0.956299ZM6.60947 6.30005C6.60947 6.5813 6.38447 6.8063 6.10322 6.8063H2.53135C2.2501 6.8063 2.0251 6.5813 2.0251 6.30005V2.72817C2.0251 2.44692 2.2501 2.22192 2.53135 2.22192H6.10322C6.38447 2.22192 6.60947 2.44692 6.60947 2.72817V6.30005Z" fill=""/>
@@ -59,16 +59,21 @@
               Dashboard
             <% end %>
           </li>
-          
-          <!-- Your menu item -->
+
+          <!-- New menu item here-->
+
+
+          <!-- New menu item end-->
+
+          <!-- Good Job -->
           <li>
-            <%= link_to '#', 
-                class: "group relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark" do %>
+            <%= link_to admin_good_job_path, target: '_blank',
+                class: "group relative flex items-center gap-2.5 rounded-md py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark #{current_path.include?('/admin/good_job') ? 'bg-graydark' : ''}" do %>
               <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.0002 7.79065C11.0814 7.79065 12.7689 6.1594 12.7689 4.1344C12.7689 2.1094 11.0814 0.478149 9.0002 0.478149C6.91895 0.478149 5.23145 2.1094 5.23145 4.1344C5.23145 6.1594 6.91895 7.79065 9.0002 7.79065ZM9.0002 1.7719C10.3783 1.7719 11.5033 2.84065 11.5033 4.16878C11.5033 5.4969 10.3783 6.56565 9.0002 6.56565C7.62207 6.56565 6.49707 5.4969 6.49707 4.16878C6.49707 2.84065 7.62207 1.7719 9.0002 1.7719Z" fill=""/>
-                <path d="M10.8283 9.05627H7.17207C4.16269 9.05627 1.71582 11.5313 1.71582 14.5406V16.875C1.71582 17.2125 1.99707 17.5219 2.36832 17.5219C2.73957 17.5219 3.02082 17.2407 3.02082 16.875V14.5406C3.02082 12.2344 4.89394 10.3613 7.20019 10.3613H10.8564C13.1627 10.3613 15.0358 12.2344 15.0358 14.5406V16.875C15.0358 17.2125 15.3171 17.5219 15.6883 17.5219C16.0596 17.5219 16.3408 17.2407 16.3408 16.875V14.5406C16.2846 11.5313 13.8377 9.05627 10.8283 9.05627Z" fill=""/>
+                <path d="M15.7499 2.9812H14.2874V2.51245C14.2874 1.58433 13.5062 0.831543 12.5781 0.831543C11.6499 0.831543 10.8687 1.61245 10.8687 2.51245V2.9812H7.16239V2.51245C7.16239 1.58433 6.38114 0.831543 5.45302 0.831543C4.5249 0.831543 3.74365 1.61245 3.74365 2.51245V2.9812H2.2499C1.29365 2.9812 0.478027 3.79683 0.478027 4.75308V14.5406C0.478027 15.4969 1.29365 16.3125 2.2499 16.3125H15.7499C16.7062 16.3125 17.5218 15.4969 17.5218 14.5406V4.72495C17.5218 3.79683 16.7062 2.9812 15.7499 2.9812ZM1.77178 8.21245H4.5249V10.9656H1.77178V8.21245ZM5.8187 8.21245H8.57178V10.9656H5.8187V8.21245ZM8.57178 12.2594H5.8187V15.0125H5.45302C5.10927 15.0125 4.79365 14.8406 4.56553 14.5406V12.2594H1.77178V14.5406C1.77178 14.7844 1.97803 15.0125 2.2499 15.0125H5.45302V12.2594H8.57178ZM9.8656 12.2594V15.0125H12.5781C12.8218 15.0125 13.0499 14.7844 13.0499 14.5406V12.2594H9.8656ZM14.2874 12.2594V14.5406C14.2874 14.8406 13.9718 15.0125 13.6281 15.0125H14.2874V12.2594ZM16.2281 14.5406C16.2281 14.7844 16.0218 15.0125 15.7499 15.0125H14.2874V12.2594H16.2281V14.5406ZM16.2281 10.9656H13.4749V8.21245H16.2281V10.9656ZM16.2281 6.9187H13.4749V4.16558H15.7499C16.0218 4.16558 16.2281 4.3937 16.2281 4.66558V6.9187ZM13.4749 6.9187V4.16558H9.8656V6.9187H13.4749ZM8.57178 6.9187V4.16558H4.9624V6.9187H8.57178ZM3.66865 4.16558V6.9187H1.77178V4.72495C1.77178 4.42495 2.0874 4.25308 2.42803 4.25308H3.66865V4.16558Z" fill=""/>
+                <circle cx="9" cy="9" r="2" fill="currentColor"/>
               </svg>
-              Your menu
+              Job Queue
             <% end %>
           </li>
         </ul>

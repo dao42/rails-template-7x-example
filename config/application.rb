@@ -37,5 +37,18 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Configure GoodJob as the Active Job queue adapter
+    config.active_job.queue_adapter = :good_job
+
+    # Enable cron-style recurring jobs
+    config.good_job.enable_cron = true
+
+    # Configure job execution modes
+    config.good_job.execution_mode = :external
+
+    # Load cron configuration from recurring.yml
+    cron_config = Rails.application.config_for(:recurring)
+    config.good_job.cron = cron_config if cron_config.present?
   end
 end

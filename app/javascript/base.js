@@ -2,12 +2,10 @@
 //
 import * as ActiveStorage from '@rails/activestorage'
 import 'alpinejs'
-
-Turbo.session.drive = false
+import * as ActionCable from "@rails/actioncable"
+import './channels'
 
 ActiveStorage.start()
-
-import * as ActionCable from "@rails/actioncable"
 window.ActionCable = ActionCable
 
 // Optional: Custom JavaScript for Tailwind-based UI

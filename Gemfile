@@ -13,6 +13,7 @@ gem "jsbundling-rails"
 gem "propshaft", "~> 1.1.0"
 gem "bcrypt"
 gem "kaminari"
+gem "good_job", "~> 4.6"
 gem "rails-i18n", "~> 7.0.10"
 gem 'mini_magick', '~> 5.3', '>= 5.3.1'
 gem "mina", "~> 1.2.2", require: false

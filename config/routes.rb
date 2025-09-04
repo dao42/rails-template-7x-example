@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     delete 'logout', to: 'sessions#destroy', as: :logout
     resource :account, only: [:edit, :update]
 
+    # Mount GoodJob dashboard
+    mount GoodJob::Engine => 'good_job', :constraints => AdminConstraint.new
+
     root to: 'dashboard#index'
   end
 

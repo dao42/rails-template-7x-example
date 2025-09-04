@@ -69,6 +69,13 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "myapp_production"
 
+  # Configure GoodJob for production
+  config.good_job.execution_mode = :external
+  config.good_job.max_threads = 10
+  config.good_job.poll_interval = 10
+  config.good_job.shutdown_timeout = 25
+  config.good_job.enable_cron = true
+
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false

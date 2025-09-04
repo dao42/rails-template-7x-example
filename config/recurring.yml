@@ -1,0 +1,24 @@
+# GoodJob Cron Configuration
+# https://github.com/bensheldon/good_job#cron-style-repeating-jobs
+
+production:
+  # Clean up finished GoodJob jobs every hour
+  cleanup_good_jobs:
+    cron: "12 * * * *"  # Every hour at minute 12
+    class: "GoodJob::CronJob"
+    description: "Clean up finished GoodJob jobs"
+    args:
+      - "GoodJob::Job.finished.where('finished_at < ?', 1.day.ago).limit(1000).delete_all"
+
+# Example configurations:
+# 
+# daily_report:
+#   cron: "0 9 * * *"  # Every day at 9 AM
+#   class: "DailyReportJob"
+#   queue: "default"
+#   description: "Generate daily reports"
+#
+# weekly_cleanup:
+#   cron: "0 2 * * 0"  # Every Sunday at 2 AM
+#   class: "WeeklyCleanupJob"
+#   args: [{ batch_size: 500 }]
