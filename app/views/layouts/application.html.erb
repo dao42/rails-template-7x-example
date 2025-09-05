@@ -11,9 +11,9 @@
     <meta name="turbolinks-cache-control" content="no-cache">
     <title>
       <% if content_for?(:title) %>
-        <%= yield(:title) + " | myapp" %>
+        <%= yield(:title) + ENV['APPNAME'] || 'ClackyAI APP' %>
       <% else %>
-        myapp
+        <%= ENV['APPNAME'] || 'ClackyAI APP' %>
       <% end %>
     </title>
     <%= csrf_meta_tags %>

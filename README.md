@@ -1,5 +1,6 @@
-# myapp
-The source code of myapp
+# ClackyAI Rails7 starter
+
+The template for ClackyAI
 
 ## Installation
 
@@ -40,11 +41,12 @@ $ ./bin/setup
 
 Start it:
 ```
-$ rails s
+$ bin/dev
 ```
 
-
 ## Admin dashboard info
+
+This template already have admin backend for website manager, do not write business logic here.
 
 Access url: /admin
 
@@ -65,11 +67,3 @@ Default password: admin
 * mina
 * puma
 * rspec
-
-## Built with
-
-[dao42/rails-template](https://github.com/dao42/rails-template)
-
-## LICENSE
-
-MIT
