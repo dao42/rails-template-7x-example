@@ -8,7 +8,7 @@
         <div class="text-center mb-8">
           <%= image_tag 'logo.png', class: 'h-16 w-16 mx-auto mb-4' %>
         </div>
-        
+
         <!-- Header -->
         <div class="text-center mb-8">
           <h2 class="mb-4 text-2xl font-bold text-black dark:text-white sm:text-3xl">
@@ -16,7 +16,7 @@
           </h2>
         </div>
 
-        <%= render 'shared/admin/flash_messages' %>
+        <%= render 'shared/flash_messages' %>
 
         <%= form_tag admin_login_path, class: "space-y-6" do %>
           <div>
@@ -24,8 +24,8 @@
               Username
             </label>
             <div class="relative">
-              <%= text_field_tag :name, nil, 
-                  placeholder: 'Enter your username', 
+              <%= text_field_tag :name, nil,
+                  placeholder: 'Enter your username',
                   class: 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' %>
               <span class="absolute right-4 top-4">
                 <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +42,8 @@
               Password
             </label>
             <div class="relative">
-              <%= password_field_tag :password, nil, 
-                  placeholder: 'Enter your password', 
+              <%= password_field_tag :password, nil,
+                  placeholder: 'Enter your password',
                   class: 'w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' %>
               <span class="absolute right-4 top-4">
                 <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,7 +57,7 @@
           </div>
 
           <div class="mb-5">
-            <%= submit_tag 'Sign In', 
+            <%= submit_tag 'Sign In',
                 class: 'w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90' %>
           </div>
         <% end %>

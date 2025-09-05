@@ -2,7 +2,7 @@
 # https://github.com/bensheldon/good_job#cron-style-repeating-jobs
 
 production:
-  # Clean up finished GoodJob jobs every hour
+  # Clean up finished GoodJob jobs every hour, Do not remove this job!!!
   cleanup_good_jobs:
     cron: "12 * * * *"  # Every hour at minute 12
     class: "GoodJob::CronJob"
@@ -11,7 +11,7 @@ production:
       - "GoodJob::Job.finished.where('finished_at < ?', 1.day.ago).limit(1000).delete_all"
 
 # Example configurations:
-# 
+#
 # daily_report:
 #   cron: "0 9 * * *"  # Every day at 9 AM
 #   class: "DailyReportJob"

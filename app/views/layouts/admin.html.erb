@@ -36,9 +36,9 @@
       <%= yield %>
     <%- else %>
       <!-- ===== Page Wrapper Start ===== -->
-      <div class="flex h-screen overflow-hidden" 
-           x-data="{ 
-             sidebarOpen: false, 
+      <div class="flex h-screen overflow-hidden"
+           x-data="{
+             sidebarOpen: false,
              darkMode: localStorage.getItem('darkMode') === 'true' || (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches),
              toggleDarkMode() {
                this.darkMode = !this.darkMode;
@@ -58,15 +58,15 @@
              }
            ">
         <%= render 'shared/admin/sidebar' %>
-        
+
         <!-- ===== Content Area Start ===== -->
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           <%= render 'shared/admin/header' %>
-          
+
           <!-- ===== Main Content Start ===== -->
           <main>
             <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              <%= render 'shared/admin/flash_messages' %>
+              <%= render 'shared/flash_messages' %>
               <%= yield %>
             </div>
           </main>
