@@ -18,10 +18,8 @@ RSpec
 
 Do not add or remove any components and avoid upgrading or downgrading components lightly.
 
-### Project Standards:
-
-Use yarn instead of npm
-
-Use PostgreSQL instead of sqlite3
+### Some important tips
 
 Generate images using this placeholder website: https://images.unsplash.com/
+
+Use `rails generate service xxx` to generate a service file

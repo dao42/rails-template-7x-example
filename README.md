@@ -26,12 +26,12 @@ Install dependencies:
     $ rails -v ( output should be rails 7.x )
     ```
 
-* yarn
+* npm
 
-    Install `yarn` for webpacker( see install document: https://yarnpkg.com/en/docs/install)
+    Make sure you have Node.js and npm installed
 
     ```bash
-    $ yarn --version ( output should be 1.6.x or higher )
+    $ npm --version ( output should be 8.x or higher )
     ```
 
 Install dependencies, setup db:
