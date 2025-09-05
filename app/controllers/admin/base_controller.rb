@@ -1,3 +1,4 @@
+# After creating a new admin controller, Do not forget to add a menu item in shared/admin/_sidebar.html.erb
 class Admin::BaseController < ActionController::Base
   layout 'admin'
 
