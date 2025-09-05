@@ -43,7 +43,7 @@ module ApplicationHelper
     when 'alert', 'error' then 'alert alert-danger alert-dismissible'
     end
   end
-  
+
   # TailAdmin flash message class helper
   def flash_tailwind_class(level)
     case level.to_sym
@@ -59,7 +59,7 @@ module ApplicationHelper
       'border-primary-300 bg-primary-50 dark:border-primary-300 dark:bg-primary-900 text-primary-500'
     end
   end
-  
+
   # Flash message title helper
   def flash_title(level)
     case level.to_sym

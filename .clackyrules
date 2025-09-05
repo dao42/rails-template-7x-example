@@ -18,8 +18,10 @@ RSpec
 
 Do not add or remove any components and avoid upgrading or downgrading components lightly.
 
-### Some important tips
+### Some important tips when coding
 
-Generate images using this placeholder website: https://images.unsplash.com/
+Do not generate any fake data that should originally be in the database for users.
 
-Use `rails generate service xxx` to generate a service file
+Generate images using this placeholder website: https://images.unsplash.com/ if you need static assets
+
+Use `rails generate service xxx` to generate a service file, not generate by yourself.
