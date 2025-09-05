@@ -61,7 +61,6 @@ Default password: admin
 * tailadmin
 * figaro
 * postgres
-* high_voltage
 * active_storage
 * kaminari
 * mina

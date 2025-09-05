@@ -7,7 +7,6 @@ gem "bootsnap", require: false
 
 gem "pg", ">= 1.1"
 gem "figaro"
-gem "high_voltage", "~> 3.1"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft", "~> 1.1.0"

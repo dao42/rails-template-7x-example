@@ -12,14 +12,7 @@ module ApplicationHelper
       destory: 'index'
     }
     mapped_action_name = action_name_map[action_name.to_sym] || action_name
-    body_class_page =
-      if controller.is_a?(HighVoltage::StaticPage) && params.key?(:id) && params[:id] !~ /\A[-+]?[0-9]*\.?[0-9]+\Z/
-        id_name = params[:id].tr('_', '-') + '-page'
-        format('%s-%s', 'pages', id_name)
-      else
-        format('%s-%s-page', path, mapped_action_name)
-      end
-
+    body_class_page = format('%s-%s-page', path, mapped_action_name)
     body_class_page
   end
 

@@ -8,6 +8,7 @@ class AdminConstraint
 end
 
 Rails.application.routes.draw do
+  # Do not write business logic at admin dashboard
   namespace :admin do
     get 'login', to: 'sessions#new', as: :login
     post 'login', to: 'sessions#create'
@@ -23,5 +24,4 @@ Rails.application.routes.draw do
   # write your routes here
 
   mount ActionCable.server => '/cable'
-  root to: 'home#index'
 end

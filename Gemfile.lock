@@ -142,7 +142,6 @@ GEM
       fugit (>= 1.11.0)
       railties (>= 6.1.0)
       thor (>= 1.0.0)
-    high_voltage (3.1.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.0)
@@ -384,7 +383,6 @@ DEPENDENCIES
   factory_bot_rails
   figaro
   good_job (~> 4.6)
-  high_voltage (~> 3.1)
   jbuilder
   jsbundling-rails
   kaminari
