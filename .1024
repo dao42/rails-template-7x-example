@@ -1,2 +1,2 @@
 run_commands: ['bin/dev']
-dependency_command: bundle install && yarn install && rails db:migrate
+dependency_command: bundle install && npm install && rails db:migrate
