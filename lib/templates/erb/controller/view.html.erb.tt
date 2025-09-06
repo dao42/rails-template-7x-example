@@ -7,8 +7,7 @@
       </svg>
     </div>
 
-    <!-- Title -->
-    <div>
+    <!-- Title --> <div>
       <h1 class="text-3xl font-bold text-gray-900">Page Under Development</h1>
       <p class="mt-2 text-sm text-gray-600">
         This page is currently being developed.
@@ -17,7 +16,7 @@
 
     <!-- Action Buttons -->
     <div class="flex space-x-6">
-      <%%= link_to "Back to Home", root_path,
+      <%%= link_to "Back to Home", '/',
             class: "flex-1 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out" %>
 
       <button type="button"
@@ -43,6 +42,7 @@
     <div class="text-xs text-gray-500">
       <p>Generated view template</p>
       <p>Generated at: <%%= Time.current.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      <p>Find me in <%= @path %></p>
     </div>
   </div>
 </div>
