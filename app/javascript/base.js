@@ -1,9 +1,13 @@
 // base dependency library, it should be only shared by `admin.js` and `application.js`.
 //
+import RailsUjs from '@rails/ujs'
 import * as ActiveStorage from '@rails/activestorage'
 import 'alpinejs'
 import * as ActionCable from "@rails/actioncable"
 import './channels'
+
+// Start Rails UJS
+RailsUjs.start()
 
 ActiveStorage.start()
 window.ActionCable = ActionCable
