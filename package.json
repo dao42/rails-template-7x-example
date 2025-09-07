@@ -6,8 +6,8 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "postcss ./app/assets/stylesheets/application.scss -o ./app/assets/builds/application.css && postcss ./app/assets/stylesheets/admin.scss -o ./app/assets/builds/admin.css",
-    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"npm run build:css\""
+    "build:css": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css && postcss ./app/assets/stylesheets/admin.css -o ./app/assets/builds/admin.css",
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext css --exec \"npm run build:css\""
   },
   "dependencies": {
     "@rails/actioncable": "^8.0.201",
@@ -19,7 +19,6 @@
     "nodemon": "^3.1.10",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
-    "sass": "^1.89.2",
     "tailwindcss": "^3.4.17"
   },
   "browserslist": [

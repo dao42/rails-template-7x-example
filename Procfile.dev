@@ -1,4 +1,4 @@
-web: env RUBY_DEBUG_OPEN=true bin/rails server
-css: npm run build:css -- --watch
+web: bin/rails server
+css: npm run watch:css
 js: npm run build -- --watch
 worker: bundle exec good_job start

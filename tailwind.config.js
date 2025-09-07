@@ -7,8 +7,7 @@ module.exports = {
     "./app/javascript/**/*.tsx",
     "./app/views/**/*.html.erb",
     "./app/helpers/**/*.rb",
-    "./app/assets/stylesheets/**/*.css",
-    "./app/assets/stylesheets/**/*.scss"
+    "./app/assets/stylesheets/**/*.css"
   ],
   darkMode: 'class',
   theme: {
