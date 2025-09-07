@@ -2,12 +2,19 @@
   "name": "app",
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.25.5"
+    "esbuild": "^0.25.5",
+    "npm-run-all": "^4.1.5",
+    "postcss-import": "^16.1.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css && postcss ./app/assets/stylesheets/admin.css -o ./app/assets/builds/admin.css",
-    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext css --exec \"npm run build:css\""
+    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap=inline --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "watch:js": "esbuild app/javascript/*.* --bundle --sourcemap=inline --format=esm --outdir=app/assets/builds --public-path=/assets --watch",
+    "build:css": "run-p build:css:*",
+    "build:css:app": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css",
+    "build:css:admin": "postcss ./app/assets/stylesheets/admin.css -o ./app/assets/builds/admin.css",
+    "watch:css": "run-p watch:css:*",
+    "watch:css:app": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --map --watch",
+    "watch:css:admin": "postcss ./app/assets/stylesheets/admin.css -o ./app/assets/builds/admin.css --map --watch"
   },
   "dependencies": {
     "@rails/actioncable": "^8.0.201",
@@ -16,7 +23,6 @@
     "alpinejs": "^3.14.9",
     "autoprefixer": "^10.4.21",
     "daisyui": "^4.12.24",
-    "nodemon": "^3.1.10",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "tailwindcss": "^3.4.17"

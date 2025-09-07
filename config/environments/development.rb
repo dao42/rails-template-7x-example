@@ -21,6 +21,7 @@ Rails.application.configure do
 
   # clacky: no use public assets
   config.assets.prefix = "/dev-assets"
+  config.assets.quiet = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
