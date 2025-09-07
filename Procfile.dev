@@ -1,4 +1,4 @@
 web: bin/rails server
 css: npm run watch:css
-js: npm run build -- --watch
+js: npm run watch:js
 worker: bundle exec good_job start
