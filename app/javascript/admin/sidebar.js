@@ -33,14 +33,14 @@
   };
 }).call(this);
 
-document.addEventListener('turbo:load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   var component = document.querySelector('.admin-page');
   if (component) {
     App.adminSidebar.restoreSidebarScrollPosition();
   }
 });
 
-document.addEventListener('turbo:before-render', function() {
+document.addEventListener('beforeunload', function() {
   var component = document.querySelector('.admin-page');
   if (component) {
     App.adminSidebar.saveSidebarScrollPosition();

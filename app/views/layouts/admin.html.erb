@@ -20,61 +20,32 @@
     <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_include_tag 'admin', 'data-turbo-track': Rails.env.production? ? "reload" : "", type: "module" %>
     <%= favicon_link_tag asset_path("favicon.ico") %>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
-    <script>
-      // 防止页面闪烁的暗色模式初始化
-      (function() {
-        const darkMode = localStorage.getItem('darkMode');
-        if (darkMode === 'true' || (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
   </head>
-  <body class="font-satoshi font-normal text-base text-body bg-whiten dark:bg-boxdark-2 dark:text-bodydark relative z-1 <%= body_class %>">
+  <body class="<%= body_class %>">
     <%- if @full_render %>
       <%= yield %>
     <%- else %>
-      <!-- ===== Page Wrapper Start ===== -->
-      <div class="flex h-screen overflow-hidden"
-           x-data="{
-             sidebarOpen: false,
-             darkMode: localStorage.getItem('darkMode') === 'true' || (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches),
-             toggleDarkMode() {
-               this.darkMode = !this.darkMode;
-               localStorage.setItem('darkMode', this.darkMode);
-               if (this.darkMode) {
-                 document.documentElement.classList.add('dark');
-               } else {
-                 document.documentElement.classList.remove('dark');
-               }
-             }
-           }"
-           x-init="
-             if (darkMode) {
-               document.documentElement.classList.add('dark');
-             } else {
-               document.documentElement.classList.remove('dark');
-             }
-           ">
-        <%= render 'shared/admin/sidebar' %>
+      <div class="drawer lg:drawer-open">
+        <input id="drawer-toggle" type="checkbox" class="drawer-toggle" />
 
-        <!-- ===== Content Area Start ===== -->
-        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <!-- Main content -->
+        <div class="drawer-content flex flex-col">
           <%= render 'shared/admin/header' %>
 
-          <!-- ===== Main Content Start ===== -->
-          <main>
-            <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+          <main class="flex-1 p-6 bg-base-200">
+            <div class="max-w-7xl mx-auto">
               <%= render 'shared/flash_messages' %>
               <%= yield %>
             </div>
           </main>
-          <!-- ===== Main Content End ===== -->
         </div>
-        <!-- ===== Content Area End ===== -->
+
+        <!-- Sidebar -->
+        <div class="drawer-side">
+          <label for="drawer-toggle" aria-label="close sidebar" class="drawer-overlay"></label>
+          <%= render 'shared/admin/sidebar' %>
+        </div>
       </div>
-      <!-- ===== Page Wrapper End ===== -->
     <%- end %>
   </body>
 </html>

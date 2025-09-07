@@ -1,4 +1,4 @@
-<%# Link to the "Previous" page with Tailwind CSS styling
+<%# Link to the "Previous" page with DaisyUI styling
   - available local variables
     url:           url to the previous page
     current_page:  a page object for the currently displayed page
@@ -6,18 +6,9 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<% unless current_page.first? %>
-  <%= link_to url, rel: 'prev', remote: remote, class: "inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-primary transition-colors duration-200" do %>
-    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-    </svg>
-    上一页
-  <% end %>
-<% else %>
-  <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed">
-    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-    </svg>
-    上一页
-  </span>
+<%= link_to url, rel: 'prev', remote: remote, class: "join-item btn", "aria-label": "Previous page" do %>
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+  </svg>
+  <span class="hidden sm:inline">上一页</span>
 <% end %>

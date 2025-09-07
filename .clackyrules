@@ -27,3 +27,5 @@ Do not write any business logic in the admin backend that should only be for web
 Generate images using this placeholder website: https://images.unsplash.com/ if you need static assets
 
 Use `rails generate service xxx` to generate a service file, not generate by yourself.
+
+When installing libraries, try to specify the version you are most familiar with (e.g., npm, bundle) instead of the latest version.

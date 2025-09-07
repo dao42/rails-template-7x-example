@@ -1,33 +1,32 @@
-<!-- Alert component with TailAdmin styles -->
 <% flash.each do |key, value| %>
-  <div class="flex w-full border-l-6 <%= flash_tailwind_class(key) %> px-5 py-4 shadow-md dark:bg-boxdark mb-5" x-data="{ open: true }" x-show="open">
-    <div class="mr-5 flex h-9 w-9 items-center justify-center rounded-lg">
-      <% if key.to_sym == :notice || key.to_sym == :success %>
-        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18.4368 10.8743C18.4368 15.5239 14.6681 19.2926 10.0185 19.2926C5.36893 19.2926 1.60022 15.5239 1.60022 10.8743C1.60022 6.22504 5.36893 2.45633 10.0185 2.45633C14.6681 2.45633 18.4368 6.22504 18.4368 10.8743ZM0.0185547 10.8743C0.0185547 16.4002 4.49291 20.8743 10.0185 20.8743C15.5444 20.8743 20.0185 16.4002 20.0185 10.8743C20.0185 5.34879 15.5444 0.874695 10.0185 0.874695C4.49291 0.874695 0.0185547 5.34879 0.0185547 10.8743Z" fill="currentColor"/>
-          <path d="M14.7726 7.60688C15.1028 7.94447 15.0964 8.47333 14.7586 8.80346L9.54945 13.8566C9.37895 14.0217 9.15246 14.1138 8.91594 14.1138C8.67942 14.1138 8.45294 14.0217 8.28244 13.8566L5.27938 10.9566C4.94163 10.6265 4.93512 10.0976 5.26514 9.75989C5.59516 9.42214 6.12402 9.41562 6.46177 9.74564L8.91594 12.1155L13.5775 7.59346C13.9153 7.26333 14.4441 7.26928 14.7726 7.60688Z" fill="currentColor"/>
-        </svg>
-      <% else %>
-        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18.4368 10.8743C18.4368 15.5239 14.6681 19.2926 10.0185 19.2926C5.36893 19.2926 1.60022 15.5239 1.60022 10.8743C1.60022 6.22504 5.36893 2.45633 10.0185 2.45633C14.6681 2.45633 18.4368 6.22504 18.4368 10.8743ZM0.0185547 10.8743C0.0185547 16.4002 4.49291 20.8743 10.0185 20.8743C15.5444 20.8743 20.0185 16.4002 20.0185 10.8743C20.0185 5.34879 15.5444 0.874695 10.0185 0.874695C4.49291 0.874695 0.0185547 5.34879 0.0185547 10.8743Z" fill="currentColor"/>
-          <path d="M13.2234 7.17449C13.5558 6.84201 14.0806 6.84196 14.4131 7.17449C14.7456 7.50696 14.7456 8.0318 14.4132 8.36433L11.9038 10.8741L14.4132 13.3839C14.7456 13.7165 14.7457 14.2413 14.4132 14.5738C14.0808 14.9062 13.5559 14.9062 13.2234 14.5737L10.714 12.0639L8.20465 14.5737C7.87221 14.9062 7.34738 14.9064 7.01486 14.574C6.6824 14.2416 6.68219 13.7167 7.01454 13.3841L9.52411 10.8741L7.01453 8.36424C6.6821 8.03171 6.68208 7.50687 7.01453 7.17442C7.34699 6.84197 7.87183 6.84203 8.20438 7.17458L10.714 9.68436L13.2234 7.17449Z" fill="currentColor"/>
-        </svg>
-      <% end %>
-    </div>
-    <div class="flex w-full flex-col">
-      <h5 class="mb-1 text-lg font-semibold text-black dark:text-white">
-        <%= flash_title(key) %>
-      </h5>
-      <p class="text-base leading-relaxed text-body">
-        <%= value %>
-      </p>
-    </div>
+  <div class="alert <%= flash_daisy_class(key) %> mb-4" x-data="{ show: true }" x-show="show" x-transition>
+    <% if key.to_sym == :notice || key.to_sym == :success %>
+      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    <% elsif key.to_sym == :info %>
+      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    <% elsif key.to_sym == :warning %>
+      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+      </svg>
+    <% else %>
+      <svg class="w-6 h-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    <% end %>
+    
     <div>
-      <button class="text-dark-400 hover:text-dark-900 dark:text-white" @click="open = false">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.5 6L11.25 2.25C11.5833 1.91667 11.5833 1.41667 11.25 1.08333C10.9167 0.75 10.4167 0.75 10.0833 1.08333L6.33333 4.83333L2.58333 1.08333C2.25 0.75 1.75 0.75 1.41667 1.08333C1.08333 1.41667 1.08333 1.91667 1.41667 2.25L5.16667 6L1.41667 9.75C1.08333 10.0833 1.08333 10.5833 1.41667 10.9167C1.58333 11.0833 1.75 11.1667 2 11.1667C2.25 11.1667 2.41667 11.0833 2.58333 10.9167L6.33333 7.16667L10.0833 10.9167C10.25 11.0833 10.4167 11.1667 10.6667 11.1667C10.9167 11.1667 11.0833 11.0833 11.25 10.9167C11.5833 10.5833 11.5833 10.0833 11.25 9.75L7.5 6Z" fill="currentColor"/>
-        </svg>
-      </button>
+      <h3 class="font-bold"><%= flash_title(key) %></h3>
+      <div class="text-xs"><%= value %></div>
     </div>
+    
+    <button class="btn btn-sm btn-circle btn-ghost" @click="show = false">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
   </div>
 <% end %>
