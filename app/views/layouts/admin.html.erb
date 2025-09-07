@@ -8,7 +8,6 @@
     <meta http-equiv="cleartype" content="on">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta name="turbo-cache-control" content="no-cache">
     <% if content_for?(:title) %>
       <title><%= format("%s - Dashboard", yield(:title)) %></title>
     <% else %>
@@ -17,9 +16,17 @@
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= content_for?(:head) ? yield(:head) : '' %>
-    <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= javascript_include_tag 'admin', 'data-turbo-track': Rails.env.production? ? "reload" : "", type: "module" %>
+    <%= stylesheet_link_tag 'admin', media: 'all' %>
+    <%= javascript_include_tag 'admin', type: "module" %>
     <%= favicon_link_tag asset_path("favicon.ico") %>
+    <script>
+      // 防止主题闪烁 - 与 admin.js 逻辑保持一致
+      (function() {
+        const isDarkKey = 'admin-isdark';
+        const savedIsDark = JSON.parse(localStorage.getItem(isDarkKey) || 'false');
+        document.documentElement.setAttribute('data-theme', savedIsDark ? 'dark' : 'light');
+      })();
+    </script>
   </head>
   <body class="<%= body_class %>">
     <%- if @full_render %>

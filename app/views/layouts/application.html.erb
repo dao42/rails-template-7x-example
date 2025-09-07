@@ -8,7 +8,6 @@
     <meta http-equiv="cleartype" content="on">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta name="turbolinks-cache-control" content="no-cache">
     <title>
       <% if content_for?(:title) %>
         <%= yield(:title) + ENV['APPNAME'] || 'ClackyAI APP' %>
@@ -19,9 +18,8 @@
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= content_for?(:head) ? yield(:head) : '' %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbo-track': Rails.env.production? ? "reload" : "", type: "module" %>
-    <!-- <%= javascript_tag 'ga', 'data-turbo-track': 'reload' %> -->
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application', type: "module" %>
     <%= favicon_link_tag asset_path("favicon.ico") %>
   </head>
   <body class="<%= body_class %>">
