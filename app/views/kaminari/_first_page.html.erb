@@ -1,4 +1,4 @@
-<%# Link to the "First" page with Tailwind CSS styling
+<%# Link to the "First" page with DaisyUI styling
   - available local variables
     url:           url to the first page
     current_page:  a page object for the currently displayed page
@@ -6,10 +6,8 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<% unless current_page.first? %>
-  <%= link_to url, remote: remote, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-primary transition-colors duration-200" do %>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-    </svg>
-  <% end %>
+<%= link_to url, remote: remote, class: "join-item btn", "aria-label": "First page" do %>
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+  </svg>
 <% end %>
