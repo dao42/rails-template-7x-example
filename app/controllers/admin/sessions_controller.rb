@@ -7,7 +7,7 @@ class Admin::SessionsController < Admin::BaseController
 
   def new
     if not Administrator.first
-      flash.now[:notice] = 'Use admin/admin for the first login to the system, '
+      flash.now[:notice] = 'Use admin/admin for the first login to the system'
     end
   end
 

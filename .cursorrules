@@ -5,10 +5,9 @@ bin/dev (Do not use `rails s` directly, as it may cause js/css loading issues)
 ### The project uses the following tech stack:
 
 Ruby on Rails 7.2
-Tailwind CSS
+daisyUI 4( with tailwind 3 )
 Figaro
 PostgreSQL
-Simple_Form
 High_Voltage
 Active_Storage
 Kaminari
