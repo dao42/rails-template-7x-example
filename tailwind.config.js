@@ -1,67 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.html.erb",
-    "./app/**/*.html.slim",
-    "./app/**/*.js",
-    "./app/**/*.ts",
-    "./app/**/*.jsx",
-    "./app/**/*.tsx",
-    "./app/**/*.vue",
     "./app/javascript/**/*.js",
     "./app/javascript/**/*.ts",
     "./app/javascript/**/*.jsx",
     "./app/javascript/**/*.tsx",
-    "./app/views/**/*.html.erb", 
-    "./app/views/**/*.html.slim",
+    "./app/views/**/*.html.erb",
     "./app/helpers/**/*.rb",
     "./app/assets/stylesheets/**/*.css",
     "./app/assets/stylesheets/**/*.scss"
   ],
   darkMode: 'class',
   theme: {
-    extend: {
-      fontFamily: {
-        satoshi: ['Satoshi', 'sans-serif'],
-      },
-      colors: {
-        current: 'currentColor',
-        transparent: 'transparent',
-        white: '#FFFFFF',
-        black: '#1C2434',
-        'black-2': '#010101',
-        body: '#64748B',
-        bodydark: '#AEB7C0',
-        bodydark1: '#DEE4EE',
-        bodydark2: '#8A99AF',
-        primary: '#3C50E0',
-        secondary: '#80CAEE',
-        stroke: '#E2E8F0',
-        graydark: '#333A48',
-        'gray-2': '#EEF1F9',
-        whiten: '#F9FAFB',
-        whiter: '#F5F7FD',
-        boxdark: '#24303F',
-        'boxdark-2': '#1A222C',
-        strokedark: '#2E3A47',
-        'gray-3': '#FAFAFA',
-        'gray-4': '#EAEAEA',
-        'form-strokedark': '#3d4d60',
-        'form-input': '#1d2a39',
-        'meta-1': '#DC3545',
-        'meta-2': '#EFF2F7',
-        'meta-3': '#10B981',
-        'meta-4': '#313D4A',
-        'meta-5': '#259AE6',
-        'meta-6': '#FFBA00',
-        'meta-7': '#FF6766',
-        'meta-8': '#F0950C',
-        'meta-9': '#E5E7EB',
-        success: '#219653',
-        danger: '#D34053',
-        warning: '#FFA70B',
-      },
-    },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
+  // daisyUI config (optional - here are the default values)
+  daisyui: {
+    themes: true, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "dark", // name of one of the included themes for dark mode
+    base: true, // applies background color and foreground color for root element by default
+    styled: true, // include daisyUI colors and design decisions for all components
+    utils: true, // adds responsive and modifier utility classes
+    prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
+    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    themeRoot: ":root", // The element that receives theme color CSS variables
+  },
 }
