@@ -2,7 +2,7 @@
 //
 import RailsUjs from '@rails/ujs'
 import * as ActiveStorage from '@rails/activestorage'
-import 'alpinejs'
+import Alpine from 'alpinejs'
 import * as ActionCable from "@rails/actioncable"
 import './channels'
 
@@ -11,6 +11,9 @@ RailsUjs.start()
 
 ActiveStorage.start()
 window.ActionCable = ActionCable
+
+Alpine.start()
+window.Alpine = Alpine
 
 // Optional: Custom JavaScript for Tailwind-based UI
 document.addEventListener('DOMContentLoaded', () => {
