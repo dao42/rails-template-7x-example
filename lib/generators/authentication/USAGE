@@ -1,0 +1,64 @@
+Description:
+    Generate a complete authentication system with users, sessions, and related functionality.
+    This generator creates models, controllers, views, mailers, and migrations needed for
+    a robust authentication system using modern Rails features.
+
+Examples:
+    # Generate full authentication system
+    bin/rails generate authentication
+
+    Note: This generator creates a complete authentication system with all features.
+    If you don't need certain features (like OAuth, email verification, etc.),
+    you can manually remove the corresponding files after generation.
+
+Generated Features:
+    - User registration and authentication
+    - Session management with device tracking
+    - Password management (change password)
+    - Email verification (unless skipped)
+    - Password reset via email (unless skipped)
+    - Omniauth integration (unless skipped)
+    - User invitation system
+    - Mailer templates with HTML formatting
+    - Modern UI using DaisyUI/Tailwind CSS
+
+Post-Generation Steps:
+    1. Run: rails db:migrate
+    2. Add bcrypt gem to your Gemfile if not already present
+    3. Configure your mailer settings for email functionality
+    4. If using omniauth, configure providers in config/initializers/omniauth.rb
+    5. Customize views to match your application's design
+    6. Review generated code and adjust as needed
+
+Files Generated:
+    Models:
+        app/models/user.rb
+        app/models/session.rb
+        app/models/current.rb
+
+    Controllers:
+        app/controllers/application_controller.rb (authentication methods injected)
+        app/controllers/sessions_controller.rb
+        app/controllers/registrations_controller.rb
+        app/controllers/passwords_controller.rb
+        app/controllers/invitations_controller.rb
+        app/controllers/identity/emails_controller.rb
+        app/controllers/identity/email_verifications_controller.rb
+        app/controllers/identity/password_resets_controller.rb
+        app/controllers/sessions/omniauth_controller.rb
+
+    Views:
+        Multiple view files for authentication forms and email templates
+
+    Mailers:
+        app/mailers/user_mailer.rb
+
+    Migrations:
+        db/migrate/create_users.rb
+        db/migrate/create_sessions.rb
+
+    Initializers:
+        config/initializers/omniauth.rb
+
+    Routes:
+        Authentication routes added to config/routes.rb

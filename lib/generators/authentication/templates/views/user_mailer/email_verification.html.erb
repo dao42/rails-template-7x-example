@@ -1,0 +1,25 @@
+<div class="email-container">
+  <div class="email-card">
+    <div class="email-header">
+      <h1 class="email-title">Email Verification</h1>
+    </div>
+    
+    <div class="email-body">
+      <p class="email-text">Hey there,</p>
+      
+      <p class="email-text">This is to confirm that <strong><%= @user.email %></strong> is the email you want to use on your account. If you ever lose your password, that's where we'll email a reset link.</p>
+      
+      <div class="email-alert">
+        <p class="email-alert-text">You must hit the link below to confirm that you received this email.</p>
+      </div>
+      
+      <div class="email-button-container">
+        <%= link_to "Yes, use this email for my account", identity_email_verification_url(sid: @signed_id), class: "email-button" %>
+      </div>
+      
+      <hr class="email-divider">
+      
+      <p class="email-footer">Have questions or need help? Just reply to this email and our support team will help you sort it out.</p>
+    </div>
+  </div>
+</div>
