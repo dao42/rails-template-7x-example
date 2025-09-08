@@ -10,6 +10,7 @@ class InvitationsController < ApplicationController
       send_invitation_instructions
       redirect_to new_invitation_path, notice: "An invitation email has been sent to #{@user.email}"
     else
+      flash.now[:alert] = handle_password_errors(@user)
       render :new, status: :unprocessable_entity
     end
   end

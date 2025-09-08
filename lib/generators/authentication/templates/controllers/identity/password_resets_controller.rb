@@ -22,6 +22,7 @@ class Identity::PasswordResetsController < ApplicationController
     if @user.update(user_params)
       redirect_to sign_in_path, notice: "Your password was reset successfully. Please sign in"
     else
+      flash.now[:alert] = handle_password_errors(@user)
       render :edit, status: :unprocessable_entity
     end
   end

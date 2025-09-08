@@ -106,21 +106,21 @@ class AuthenticationGenerator < Rails::Generators::Base
 
   def add_gems_to_gemfile
     say "Adding required gems to Gemfile...", :green
-    
+
     # Check if bcrypt is already in Gemfile (either active or commented)
     gemfile_content = File.read('Gemfile')
-    
+
     # Handle bcrypt - uncomment if it exists as a comment, otherwise add it
     if gemfile_content.include?('# gem "bcrypt"')
       uncomment_lines 'Gemfile', /gem "bcrypt"/
     elsif !gemfile_content.include?('gem "bcrypt"') && !gemfile_content.include?("gem 'bcrypt'")
       gem 'bcrypt'
     end
-    
+
     unless gemfile_content.include?('gem "omniauth"') || gemfile_content.include?("gem 'omniauth'")
       gem 'omniauth'
     end
-    
+
     unless gemfile_content.include?('omniauth-rails_csrf_protection')
       gem 'omniauth-rails_csrf_protection'
     end
@@ -191,6 +191,40 @@ class AuthenticationGenerator < Rails::Generators::Base
   def set_current_request_details
     Current.user_agent = request.user_agent
     Current.ip_address = request.ip
+  end
+
+  def handle_password_errors(user)
+    error_messages = []
+
+    user.errors.each do |error|
+      case error.attribute
+      when :current_password
+        error_messages << "Current password is incorrect"
+      when :password
+        if error.type == :too_short
+          error_messages << "New password must be at least \#{User::MIN_PASSWORD} characters long"
+        elsif error.type == :invalid
+          error_messages << "Password format is invalid"
+        else
+          error_messages << "New password: \#{error.message}"
+        end
+      when :password_confirmation
+        error_messages << "Password confirmation doesn't match"
+      when :password_digest
+        error_messages << "Password format is invalid"
+      end
+    end
+
+    if error_messages.empty?
+      error_messages = user.errors.full_messages
+    end
+
+    return error_messages.first
+  end
+
+  # Just used by registeration/authentication controller
+  def _strong_root_path
+    respond_to?(:root_path) ? root_path : '/'
   end
   # Authentication private methods end
 #{match}

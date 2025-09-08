@@ -19,6 +19,8 @@ Do not add or remove any components and avoid upgrading or downgrading component
 
 ### Some important tips when coding
 
+When you need to register/authentication system, don't write it yourself. Use `rails generate authentication` generate it first.
+
 Do not generate any fake data that should originally be in the database for users.
 
 Do not write any business logic in the admin backend that should only be for website management and maintenance.

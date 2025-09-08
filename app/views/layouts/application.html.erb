@@ -23,11 +23,9 @@
     <%= favicon_link_tag asset_path("favicon.ico") %>
   </head>
   <body class="<%= body_class %>">
-    <main class="min-h-screen mx-auto max-w-[100rem] ">
-      <div class="container">
-        <%= render 'shared/flash_messages' %>
-        <%= yield %>
-      </div>
+    <main class="min-h-screen">
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
     </main>
   </body>
 </html>
