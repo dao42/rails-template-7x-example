@@ -1,0 +1,131 @@
+<div class="bookstore-container">
+  <div class="container mx-auto px-8 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <div class="neo-card-red inline-block neo-offset mb-8 p-6">
+        <h1 class="neo-title mb-4">NEO<br>BOOKSTORE</h1>
+        <div class="neo-card-yellow p-4 neo-offset-reverse">
+          <p class="neo-text font-bold">BRUTAL BOOKS FOR BRUTAL MINDS</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search and Filters -->
+    <div class="mb-12">
+      <div class="neo-grid-asymmetric gap-6">
+        <!-- Search Form -->
+        <div class="neo-card">
+          <%= form_with url: books_path, method: :get, local: true, class: "space-y-4" do |form| %>
+            <h3 class="neo-subtitle mb-4">SEARCH BOOKS</h3>
+            <%= form.text_field :search, 
+                placeholder: "Search by title or author...", 
+                value: params[:search],
+                class: "neo-input w-full" %>
+            <%= form.submit "SEARCH", class: "neo-btn neo-btn-blue w-full" %>
+          <% end %>
+        </div>
+
+        <!-- Filter by Author -->
+        <div class="neo-card-green neo-offset">
+          <h3 class="neo-subtitle mb-4">FILTER BY AUTHOR</h3>
+          <div class="space-y-2">
+            <%= link_to "ALL AUTHORS", books_path, 
+                class: "neo-btn #{'neo-btn-red' if params[:author].blank?} w-full block" %>
+            <% @authors.first(5).each do |author| %>
+              <%= link_to author.upcase, books_path(author: author), 
+                  class: "neo-btn #{'neo-btn-red' if params[:author] == author} w-full block text-sm" %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="neo-card-yellow neo-offset-reverse">
+          <h3 class="neo-subtitle mb-4">STORE STATS</h3>
+          <div class="space-y-3">
+            <div class="neo-card-blue p-3">
+              <p class="neo-text text-white font-bold"><%= @books.total_count %> BOOKS FOUND</p>
+            </div>
+            <div class="neo-card-pink p-3">
+              <p class="neo-text font-bold"><%= Book.sum(:stock) %> TOTAL STOCK</p>
+            </div>
+            <div class="neo-card-red p-3">
+              <p class="neo-text text-white font-bold"><%= @authors.count %> AUTHORS</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Books Grid -->
+    <main class="book-grid mb-16">
+      <% @books.each do |book| %>
+        <div class="book-card <%= ['neo-offset', 'neo-offset-reverse', ''].sample %>">
+          <%= link_to book_path(book), class: "block" do %>
+            <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+            
+            <div class="p-6">
+              <h3 class="neo-subtitle mb-2"><%= book.title.upcase %></h3>
+              <p class="neo-text mb-3">BY <%= book.author.upcase %></p>
+              
+              <div class="flex justify-between items-center mb-4">
+                <span class="neo-text font-bold text-2xl">$<%= book.price %></span>
+                <div class="neo-card-<%= book.stock > 10 ? 'green' : book.stock > 0 ? 'yellow' : 'red' %> p-2">
+                  <span class="neo-text font-bold">
+                    <%= book.stock > 0 ? "#{book.stock} IN STOCK" : "OUT OF STOCK" %>
+                  </span>
+                </div>
+              </div>
+              
+              <div class="neo-btn neo-btn-red w-full text-center">
+                <%= book.available? ? "BUY NOW" : "SOLD OUT" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </main>
+
+    <!-- Pagination -->
+    <div class="text-center">
+      <div class="neo-card inline-block p-6">
+        <%= paginate @books %>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 text-center">
+      <div class="neo-card-blue p-6 neo-skew">
+        <h3 class="neo-subtitle text-white mb-4">ADMIN ACCESS</h3>
+        <%= link_to "/admin", class: "neo-btn neo-btn-yellow" do %>
+          ADMIN LOGIN
+        <% end %>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  // Add random rotation to book cards
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.book-card');
+    cards.forEach(card => {
+      if (!card.classList.contains('neo-offset') && !card.classList.contains('neo-offset-reverse')) {
+        const randomRotation = (Math.random() - 0.5) * 2; // -1 to 1 degrees
+        card.style.transform = `rotate(${randomRotation}deg)`;
+      }
+    });
+
+    // Add glitch effect to buttons
+    const buttons = document.querySelectorAll('.neo-btn');
+    buttons.forEach(button => {
+      button.addEventListener('mouseover', function() {
+        if (Math.random() < 0.1) { // 10% chance
+          this.style.filter = 'hue-rotate(180deg)';
+          setTimeout(() => {
+            this.style.filter = '';
+          }, 100);
+        }
+      });
+    });
+  });
+</script>

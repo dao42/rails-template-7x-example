@@ -1,0 +1,124 @@
+<div class="bookstore-container">
+  <div class="container mx-auto px-8 py-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Cancel Header -->
+      <div class="neo-card-red p-8 mb-12 neo-offset">
+        <h1 class="neo-title mb-6 text-white">PAYMENT<br>CANCELLED</h1>
+        <div class="neo-card-yellow p-4 neo-offset-reverse">
+          <p class="neo-text font-bold text-2xl">NO CHARGES WERE MADE</p>
+        </div>
+      </div>
+
+      <!-- Order Info -->
+      <% if @order %>
+        <div class="neo-grid-asymmetric gap-8 mb-16">
+          <!-- Cancelled Order -->
+          <div class="neo-card-yellow p-6 neo-skew">
+            <h3 class="neo-subtitle mb-4">CANCELLED ORDER</h3>
+            <div class="space-y-3 text-left">
+              <p class="neo-text"><strong>Book:</strong> <%= @order.book.title %></p>
+              <p class="neo-text"><strong>Author:</strong> <%= @order.book.author %></p>
+              <p class="neo-text"><strong>Price:</strong> $<%= @order.total_amount %></p>
+              <p class="neo-text"><strong>Status:</strong> CANCELLED</p>
+            </div>
+          </div>
+
+          <!-- Book Image -->
+          <div class="neo-card neo-offset-reverse">
+            <%= image_tag @order.book.cover_image_url, alt: @order.book.title, class: "w-full h-auto neo-border opacity-50" %>
+          </div>
+
+          <!-- Why Cancel? -->
+          <div class="neo-card-blue p-6">
+            <h3 class="neo-subtitle text-white mb-4">WHY PAYMENTS GET CANCELLED</h3>
+            <div class="space-y-2 text-left">
+              <p class="neo-text text-white">• Changed your mind</p>
+              <p class="neo-text text-white">• Payment method issues</p>
+              <p class="neo-text text-white">• Browser navigation error</p>
+              <p class="neo-text text-white">• Technical difficulties</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- What Now? -->
+      <div class="mb-16">
+        <div class="neo-card-green p-8 neo-offset">
+          <h3 class="neo-subtitle mb-6">WHAT WOULD YOU LIKE TO DO?</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <% if @order&.book&.available? %>
+              <%= link_to book_path(@order.book), class: "neo-btn neo-btn-red w-full" do %>
+                TRY AGAIN
+              <% end %>
+            <% end %>
+            
+            <%= link_to books_path, class: "neo-btn neo-btn-blue w-full" do %>
+              BROWSE MORE BOOKS
+            <% end %>
+            
+            <%= link_to "mailto:support@neobookstore.com?subject=Payment Issue", class: "neo-btn neo-btn-yellow w-full" do %>
+              CONTACT SUPPORT
+            <% end %>
+            
+            <%= link_to "/admin", class: "neo-btn neo-btn-pink w-full" do %>
+              ADMIN LOGIN
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reassurance -->
+      <div class="neo-card p-6 mb-8">
+        <h3 class="neo-subtitle mb-4">NO WORRIES!</h3>
+        <div class="space-y-2">
+          <p class="neo-text">Your payment was not processed.</p>
+          <p class="neo-text">No money was charged to your account.</p>
+          <p class="neo-text">You can try again anytime or browse our other books.</p>
+        </div>
+      </div>
+
+      <!-- Footer Message -->
+      <footer>
+        <div class="neo-card-yellow p-6 neo-offset-reverse">
+          <p class="neo-text font-bold text-lg">
+            THANKS FOR VISITING NEO BOOKSTORE!<br>
+            WE HOPE TO SEE YOU AGAIN SOON!
+          </p>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add disappointed animation to title
+    setTimeout(function() {
+      const title = document.querySelector('.neo-title');
+      if (title) {
+        title.style.animation = 'shake 1s ease-in-out';
+      }
+    }, 500);
+
+    // Add random glitch to cards
+    const cards = document.querySelectorAll('.neo-card, .neo-card-colored');
+    cards.forEach(card => {
+      if (!card.classList.contains('neo-offset') && !card.classList.contains('neo-offset-reverse') && !card.classList.contains('neo-skew')) {
+        const randomRotation = (Math.random() - 0.5) * 2;
+        card.style.transform = `rotate(${randomRotation}deg)`;
+      }
+    });
+  });
+
+  // Define shake animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  `;
+  document.head.appendChild(style);
+</script>

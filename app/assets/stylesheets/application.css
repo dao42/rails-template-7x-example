@@ -1,5 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Neo-Brutalism Custom Styles */
+
+/* Base Typography */
+
+:root {
+  --neo-black: #000000;
+  --neo-white: #ffffff;
+  --neo-red: #ff0000;
+  --neo-blue: #0000ff;
+  --neo-yellow: #ffff00;
+  --neo-green: #00ff00;
+  --neo-pink: #ff00ff;
+  --neo-cyan: #00ffff;
+  --neo-orange: #ff8000;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: var(--neo-white);
+  color: var(--neo-black);
+  line-height: 1.2;
+}
+
+/* Neo-Brutalism Base Classes */
+.neo-border {
+  border: 4px solid var(--neo-black);
+}
+
+.neo-shadow {
+  box-shadow: 8px 8px 0px var(--neo-black);
+}
+
+.neo-shadow-small {
+  box-shadow: 4px 4px 0px var(--neo-black);
+}
+
+.neo-shadow-large {
+  box-shadow: 12px 12px 0px var(--neo-black);
+}
+
+/* Buttons */
+.neo-btn {
+  @apply neo-border neo-shadow font-bold py-3 px-6 uppercase tracking-wider;
+  background-color: var(--neo-yellow);
+  color: var(--neo-black);
+  transition: transform 0.1s ease;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px var(--neo-black);
+}
+
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px var(--neo-black);
+}
+
+.neo-btn-red {
+  background-color: var(--neo-red);
+  color: var(--neo-white);
+}
+
+.neo-btn-blue {
+  background-color: var(--neo-blue);
+  color: var(--neo-white);
+}
+
+.neo-btn-green {
+  background-color: var(--neo-green);
+  color: var(--neo-black);
+}
+
+.neo-btn-pink {
+  background-color: var(--neo-pink);
+  color: var(--neo-black);
+}
+
+/* Cards */
+.neo-card {
+  @apply neo-border neo-shadow bg-white p-6;
+  background-color: var(--neo-white);
+}
+
+.neo-card-colored {
+  @apply neo-border neo-shadow p-6;
+}
+
+.neo-card-red {
+  background-color: var(--neo-red);
+  color: var(--neo-white);
+}
+
+.neo-card-blue {
+  background-color: var(--neo-blue);
+  color: var(--neo-white);
+}
+
+.neo-card-yellow {
+  background-color: var(--neo-yellow);
+  color: var(--neo-black);
+}
+
+.neo-card-green {
+  background-color: var(--neo-green);
+  color: var(--neo-black);
+}
+
+/* Typography */
+.neo-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 3rem;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--neo-black);
+}
+
+.neo-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--neo-black);
+}
+
+.neo-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+/* Asymmetrical Grid */
+.neo-grid-asymmetric {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .neo-grid-asymmetric {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Intentional "errors" for raw aesthetic */
+.neo-offset {
+  transform: rotate(-1deg);
+}
+
+.neo-offset-reverse {
+  transform: rotate(1deg);
+}
+
+.neo-skew {
+  transform: skew(-2deg);
+}
+
+/* Input fields */
+.neo-input {
+  @apply neo-border p-3;
+  background-color: var(--neo-white);
+  color: var(--neo-black);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+.neo-input:focus {
+  outline: none;
+  box-shadow: 6px 6px 0px var(--neo-blue);
+}
+
+/* Bookstore specific styles */
+.bookstore-container {
+  min-height: 100vh;
+  background: linear-gradient(45deg, var(--neo-white) 25%, var(--neo-cyan) 25%, var(--neo-cyan) 50%, var(--neo-white) 50%, var(--neo-white) 75%, var(--neo-cyan) 75%);
+  background-size: 40px 40px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.book-card {
+  @apply neo-border neo-shadow bg-white;
+  background-color: var(--neo-white);
+  transition: transform 0.1s ease;
+}
+
+.book-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0px var(--neo-black);
+}
+
+.book-image {
+  @apply neo-border;
+  border-bottom: none;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
 
 /* customize your own style here */

@@ -10,6 +10,9 @@ end
 Rails.application.routes.draw do
   # Do not write business logic at admin dashboard
   namespace :admin do
+    resources :books
+    resources :orders, only: [:index, :show, :update, :destroy]
+    
     get 'login', to: 'sessions#new', as: :login
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy', as: :logout
@@ -22,6 +25,17 @@ Rails.application.routes.draw do
   end
 
   # write your routes here
+  root 'books#index'
+  
+  resources :books, only: [:index, :show]
+  
+  resources :payments, only: [:create] do
+    collection do
+      get :success
+      get :cancel
+      post :webhook
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end

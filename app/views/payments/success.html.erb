@@ -1,0 +1,111 @@
+<div class="bookstore-container">
+  <div class="container mx-auto px-8 py-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Success Header -->
+      <div class="neo-card-green p-8 mb-12 neo-offset">
+        <h1 class="neo-title mb-6">PAYMENT<br>SUCCESS!</h1>
+        <div class="neo-card-yellow p-4 neo-offset-reverse">
+          <p class="neo-text font-bold text-2xl">YOUR ORDER IS CONFIRMED</p>
+        </div>
+      </div>
+
+      <!-- Order Details -->
+      <% if @order %>
+        <div class="neo-grid-asymmetric gap-8 mb-16">
+          <!-- Order Info -->
+          <div class="neo-card-blue p-6">
+            <h3 class="neo-subtitle text-white mb-4">ORDER DETAILS</h3>
+            <div class="space-y-3 text-left">
+              <p class="neo-text text-white"><strong>Order ID:</strong> #<%= @order.id %></p>
+              <p class="neo-text text-white"><strong>Book:</strong> <%= @order.book.title %></p>
+              <p class="neo-text text-white"><strong>Author:</strong> <%= @order.book.author %></p>
+              <p class="neo-text text-white"><strong>Amount:</strong> $<%= @order.total_amount %></p>
+              <p class="neo-text text-white"><strong>Customer:</strong> <%= @order.customer_name %></p>
+              <p class="neo-text text-white"><strong>Email:</strong> <%= @order.customer_email %></p>
+            </div>
+          </div>
+
+          <!-- Book Image -->
+          <div class="neo-card neo-offset-reverse">
+            <%= image_tag @order.book.cover_image_url, alt: @order.book.title, class: "w-full h-auto neo-border" %>
+          </div>
+
+          <!-- Next Steps -->
+          <div class="neo-card-yellow p-6 neo-skew">
+            <h3 class="neo-subtitle mb-4">WHAT'S NEXT?</h3>
+            <div class="space-y-3">
+              <div class="neo-card-green p-3">
+                <p class="neo-text font-bold">1. CHECK YOUR EMAIL</p>
+              </div>
+              <div class="neo-card-blue p-3">
+                <p class="neo-text text-white font-bold">2. DOWNLOAD YOUR BOOK</p>
+              </div>
+              <div class="neo-card-pink p-3">
+                <p class="neo-text font-bold">3. ENJOY READING!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="neo-card-red p-8 mb-12">
+          <h3 class="neo-subtitle text-white mb-4">ORDER NOT FOUND</h3>
+          <p class="neo-text text-white">We couldn't find your order details, but your payment was successful!</p>
+        </div>
+      <% end %>
+
+      <!-- Actions -->
+      <div class="space-y-6">
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+          <%= link_to books_path, class: "neo-btn neo-btn-blue" do %>
+            CONTINUE SHOPPING
+          <% end %>
+          
+          <%= link_to "mailto:support@neobookstore.com?subject=Order ##{@order&.id || 'Unknown'}", class: "neo-btn neo-btn-yellow" do %>
+            CONTACT SUPPORT
+          <% end %>
+        </div>
+
+        <!-- Receipt Info -->
+        <div class="neo-card p-6">
+          <h3 class="neo-subtitle mb-4">RECEIPT INFORMATION</h3>
+          <div class="space-y-2">
+            <p class="neo-text">A receipt has been sent to your email address.</p>
+            <p class="neo-text">Transaction completed at: <%= Time.current.strftime("%Y-%m-%d %H:%M:%S %Z") %></p>
+            <p class="neo-text">Payment processed securely via Stripe.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Message -->
+      <footer class="mt-16">
+        <div class="neo-card-red p-6 neo-offset">
+          <p class="neo-text text-white font-bold text-lg">
+            THANK YOU FOR YOUR PURCHASE!<br>
+            ENJOY YOUR NEW BOOK!
+          </p>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add celebration effect
+    setTimeout(function() {
+      const title = document.querySelector('.neo-title');
+      if (title) {
+        title.style.animation = 'pulse 2s infinite';
+      }
+    }, 500);
+
+    // Add random glitch to cards
+    const cards = document.querySelectorAll('.neo-card, .neo-card-colored');
+    cards.forEach(card => {
+      if (!card.classList.contains('neo-offset') && !card.classList.contains('neo-offset-reverse') && !card.classList.contains('neo-skew')) {
+        const randomRotation = (Math.random() - 0.5) * 2;
+        card.style.transform = `rotate(${randomRotation}deg)`;
+      }
+    });
+  });
+</script>

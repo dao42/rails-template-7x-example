@@ -1,0 +1,149 @@
+<div class="container mx-auto px-4 py-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold">Books Management</h1>
+      <p class="text-base-content/70">Manage your bookstore inventory</p>
+    </div>
+    <%= link_to new_admin_book_path, class: "btn btn-primary" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+      </svg>
+      Add New Book
+    <% end %>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="bg-base-100 p-4 rounded-lg shadow mb-6">
+    <%= form_with url: admin_books_path, method: :get, local: true, class: "grid grid-cols-1 md:grid-cols-4 gap-4" do |form| %>
+      <!-- Search -->
+      <div class="form-control">
+        <%= form.text_field :search, 
+            placeholder: "Search books, authors, or ISBN...", 
+            value: params[:search],
+            class: "input input-bordered" %>
+      </div>
+      
+      <!-- Filter -->
+      <div class="form-control">
+        <%= form.select :filter, 
+            [
+              ['All Books', ''],
+              ['Available', 'available'],
+              ['Out of Stock', 'out_of_stock'],
+              ['Low Stock (≤5)', 'low_stock']
+            ], 
+            { selected: params[:filter] },
+            { class: "select select-bordered" } %>
+      </div>
+      
+      <!-- Submit -->
+      <div class="form-control">
+        <%= form.submit "Search", class: "btn btn-outline" %>
+      </div>
+      
+      <!-- Clear -->
+      <div class="form-control">
+        <%= link_to "Clear", admin_books_path, class: "btn btn-ghost" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Statistics -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="stat bg-primary text-primary-content rounded-lg">
+      <div class="stat-title text-primary-content/70">Total Books</div>
+      <div class="stat-value"><%= Book.count %></div>
+    </div>
+    <div class="stat bg-success text-success-content rounded-lg">
+      <div class="stat-title text-success-content/70">Available</div>
+      <div class="stat-value"><%= Book.available.count %></div>
+    </div>
+    <div class="stat bg-warning text-warning-content rounded-lg">
+      <div class="stat-title text-warning-content/70">Low Stock</div>
+      <div class="stat-value"><%= Book.where('stock > 0 AND stock <= 5').count %></div>
+    </div>
+    <div class="stat bg-error text-error-content rounded-lg">
+      <div class="stat-title text-error-content/70">Out of Stock</div>
+      <div class="stat-value"><%= Book.where(stock: 0).count %></div>
+    </div>
+  </div>
+
+  <!-- Books Table -->
+  <div class="bg-base-100 rounded-lg shadow overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>ISBN</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td>
+                <div class="avatar">
+                  <div class="w-12 h-16 rounded">
+                    <%= image_tag book.cover_image_url, alt: book.title, class: "object-cover" %>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="font-bold"><%= book.title %></div>
+                <div class="text-sm text-base-content/70 truncate max-w-xs">
+                  <%= truncate(book.description, length: 60) %>
+                </div>
+              </td>
+              <td><%= book.author %></td>
+              <td class="font-bold">$<%= book.price %></td>
+              <td>
+                <div class="badge <%= book.stock > 10 ? 'badge-success' : book.stock > 0 ? 'badge-warning' : 'badge-error' %>">
+                  <%= book.stock %>
+                </div>
+              </td>
+              <td class="font-mono text-sm"><%= book.isbn %></td>
+              <td>
+                <div class="flex gap-2">
+                  <%= link_to admin_book_path(book), class: "btn btn-ghost btn-xs" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  <% end %>
+                  
+                  <%= link_to edit_admin_book_path(book), class: "btn btn-ghost btn-xs" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  <% end %>
+                  
+                  <%= link_to admin_book_path(book), 
+                      method: :delete,
+                      data: { 
+                        confirm: "Are you sure you want to delete '#{book.title}'? This action cannot be undone." 
+                      },
+                      class: "btn btn-ghost btn-xs text-error" do %>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-center mt-6">
+    <%= paginate @books %>
+  </div>
+</div>

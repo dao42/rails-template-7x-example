@@ -1,4 +1,9 @@
 # Use `rake secret` to generate one key
 SECRET_KEY_BASE: ''
 
-APPNAME: 'ClackyAI APP'
+APPNAME: 'Neo Bookstore'
+
+# Stripe Configuration (get these from https://dashboard.stripe.com/apikeys)
+STRIPE_PUBLISHABLE_KEY: 'pk_test_...'
+STRIPE_SECRET_KEY: 'sk_test_...'
+STRIPE_WEBHOOK_SECRET: 'whsec_...'

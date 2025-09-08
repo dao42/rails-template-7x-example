@@ -1,0 +1,183 @@
+<div class="bookstore-container">
+  <div class="container mx-auto px-8 py-12">
+    <!-- Navigation -->
+    <div class="mb-8">
+      <%= link_to books_path, class: "neo-btn neo-btn-blue" do %>
+        ← BACK TO STORE
+      <% end %>
+    </div>
+
+    <!-- Book Details -->
+    <div class="neo-grid-asymmetric gap-8 mb-16">
+      <!-- Book Image -->
+      <div class="neo-card neo-offset">
+        <%= image_tag @book.cover_image_url, alt: @book.title, class: "w-full h-auto neo-border" %>
+      </div>
+
+      <!-- Book Info -->
+      <div class="space-y-6">
+        <div class="neo-card-red p-6">
+          <h1 class="neo-title mb-4"><%= @book.title.upcase %></h1>
+          <p class="neo-subtitle text-white">BY <%= @book.author.upcase %></p>
+        </div>
+
+        <div class="neo-card-yellow neo-offset-reverse p-6">
+          <h3 class="neo-subtitle mb-4">BOOK DETAILS</h3>
+          <div class="space-y-2">
+            <p class="neo-text"><strong>ISBN:</strong> <%= @book.isbn %></p>
+            <p class="neo-text"><strong>PRICE:</strong> $<%= @book.price %></p>
+            <p class="neo-text">
+              <strong>STOCK:</strong> 
+              <span class="neo-card-<%= @book.stock > 10 ? 'green' : @book.stock > 0 ? 'red' : 'gray' %> px-2 py-1">
+                <%= @book.stock > 0 ? "#{@book.stock} AVAILABLE" : "OUT OF STOCK" %>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Stock Warning -->
+        <% if @book.stock > 0 && @book.stock <= 5 %>
+          <div class="neo-card-red p-4 neo-skew">
+            <p class="neo-text text-white font-bold">⚠ ONLY <%= @book.stock %> LEFT IN STOCK!</p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Purchase Form -->
+      <div class="neo-card-blue p-6 neo-offset">
+        <h3 class="neo-subtitle text-white mb-6">BUY THIS BOOK</h3>
+        
+        <% if @book.available? %>
+          <%= form_with url: payments_path, method: :post, local: true, 
+              data: { confirm: "Continue to Stripe checkout?" } do |form| %>
+            <%= form.hidden_field :book_id, value: @book.id %>
+            
+            <div class="space-y-4">
+              <div>
+                <%= form.label :customer_name, "YOUR NAME", class: "neo-text text-white font-bold block mb-2" %>
+                <%= form.text_field :customer_name, 
+                    placeholder: "Enter your full name...", 
+                    required: true,
+                    class: "neo-input w-full" %>
+              </div>
+              
+              <div>
+                <%= form.label :customer_email, "YOUR EMAIL", class: "neo-text text-white font-bold block mb-2" %>
+                <%= form.email_field :customer_email, 
+                    placeholder: "Enter your email...", 
+                    required: true,
+                    class: "neo-input w-full" %>
+              </div>
+              
+              <div class="neo-card-yellow p-4">
+                <p class="neo-text font-bold mb-2">ORDER SUMMARY:</p>
+                <div class="flex justify-between">
+                  <span class="neo-text"><%= @book.title %></span>
+                  <span class="neo-text font-bold">$<%= @book.price %></span>
+                </div>
+                <hr class="border-black border-2 my-2">
+                <div class="flex justify-between">
+                  <span class="neo-text font-bold">TOTAL:</span>
+                  <span class="neo-text font-bold text-xl">$<%= @book.price %></span>
+                </div>
+              </div>
+              
+              <%= form.submit "PAY WITH STRIPE", class: "neo-btn neo-btn-green w-full" %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="neo-card-red p-4">
+            <p class="neo-text text-white font-bold text-center">SOLD OUT</p>
+          </div>
+        <% end %>
+
+        <div class="mt-6 space-y-2">
+          <div class="neo-card-yellow p-3">
+            <p class="neo-text font-bold">✓ SECURE PAYMENT VIA STRIPE</p>
+          </div>
+          <div class="neo-card-green p-3">
+            <p class="neo-text font-bold">✓ NO ACCOUNT REQUIRED</p>
+          </div>
+          <div class="neo-card-pink p-3">
+            <p class="neo-text font-bold">✓ INSTANT DOWNLOAD</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-16">
+      <div class="neo-card-green p-8 neo-offset-reverse">
+        <h3 class="neo-subtitle mb-6">DESCRIPTION</h3>
+        <p class="neo-text text-lg leading-relaxed"><%= @book.description %></p>
+      </div>
+    </div>
+
+    <!-- Related Books -->
+    <div class="mb-16">
+      <div class="neo-card p-6 mb-8">
+        <h3 class="neo-subtitle mb-6">MORE BOOKS BY <%= @book.author.upcase %></h3>
+        
+        <% related_books = Book.available.by_author(@book.author).where.not(id: @book.id).limit(3) %>
+        <% if related_books.any? %>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <% related_books.each do |book| %>
+              <div class="neo-card-yellow p-4 <%= ['neo-offset', 'neo-offset-reverse', ''].sample %>">
+                <%= link_to book_path(book), class: "block" do %>
+                  <%= image_tag book.cover_image_url, alt: book.title, class: "w-full h-48 object-cover neo-border mb-3" %>
+                  <h4 class="neo-text font-bold mb-2"><%= book.title.upcase %></h4>
+                  <p class="neo-text">$<%= book.price %></p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="neo-text">NO OTHER BOOKS BY THIS AUTHOR AVAILABLE.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="neo-card-red p-6 neo-skew">
+        <p class="neo-text text-white font-bold">
+          HAVING TROUBLE? CONTACT SUPPORT OR CHECK OUR 
+          <%= link_to "ADMIN PANEL", "/admin", class: "text-yellow-400 underline" %>
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add form validation
+    const form = document.querySelector('form[action="/payments"]');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const name = this.querySelector('[name="customer_name"]').value.trim();
+        const email = this.querySelector('[name="customer_email"]').value.trim();
+        
+        if (!name || !email) {
+          e.preventDefault();
+          alert('Please fill in all required fields!');
+          return false;
+        }
+        
+        // Add loading state
+        const submitBtn = this.querySelector('[type="submit"]');
+        submitBtn.textContent = 'PROCESSING...';
+        submitBtn.disabled = true;
+      });
+    }
+
+    // Add glitch effects
+    const cards = document.querySelectorAll('.neo-card, .neo-card-colored');
+    cards.forEach(card => {
+      if (!card.classList.contains('neo-offset') && !card.classList.contains('neo-offset-reverse') && !card.classList.contains('neo-skew')) {
+        const randomRotation = (Math.random() - 0.5) * 1.5;
+        card.style.transform = `rotate(${randomRotation}deg)`;
+      }
+    });
+  });
+</script>
