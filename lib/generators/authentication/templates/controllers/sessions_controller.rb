@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[ new create ]
-
-  before_action :set_session, only: :destroy
+  before_action :authenticate_user!, only: [:index, :destroy]
 
   def index
     @sessions = Current.user.sessions.order(created_at: :desc)
@@ -22,13 +20,14 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @session.destroy
-    redirect_to(sessions_path, notice: "That session has been logged out")
-  end
+    if params[:id].present?
+      @session = Current.user.sessions.find(params[:id])
+    else
+      @session = Current.session
+    end
 
-  private
-
-  def set_session
-    @session = Current.user.sessions.find(params[:id])
+    @session.destroy!
+    cookies.delete(:session_token)
+    redirect_to(_strong_root_path, notice: "That session has been logged out")
   end
 end
