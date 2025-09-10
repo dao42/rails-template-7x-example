@@ -1,7 +1,8 @@
-require 'ostruct'
-
 class AdminCrudGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
+
+  # Simple data structure to replace OpenStruct
+  ModelAttribute = Struct.new(:name, :type, :sql_type, :null, :default, keyword_init: true)
 
   def check_model_exists
     unless model_class_exists?
@@ -104,7 +105,7 @@ class AdminCrudGenerator < Rails::Generators::NamedBase
 
   def model_attributes
     @model_attributes ||= model_columns.map do |column|
-      OpenStruct.new(
+      ModelAttribute.new(
         name: column.name,
         type: column.type,
         sql_type: column.sql_type,

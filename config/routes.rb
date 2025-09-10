@@ -10,6 +10,7 @@ end
 Rails.application.routes.draw do
   # Do not write business logic at admin dashboard
   namespace :admin do
+    resources :administrators
     get 'login', to: 'sessions#new', as: :login
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy', as: :logout

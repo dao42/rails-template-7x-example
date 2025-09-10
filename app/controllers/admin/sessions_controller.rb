@@ -32,7 +32,7 @@ class Admin::SessionsController < Admin::BaseController
   def create_first_admin!
     return if Administrator.first
     logger.info("System have no admins, create the first one")
-    admin = Administrator.new(name: 'admin', password: 'admin')
+    admin = Administrator.new(name: 'admin', password: 'admin', role: 'super_admin')
     admin.save!(validate: false)
   end
 end
