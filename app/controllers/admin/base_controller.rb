@@ -2,6 +2,8 @@
 class Admin::BaseController < ActionController::Base
   layout 'admin'
 
+  include MissingTemplateFallbackConcern
+
   protect_from_forgery with: :exception
 
   before_action :authenticate_admin!
