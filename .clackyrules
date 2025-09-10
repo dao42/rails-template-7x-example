@@ -8,8 +8,7 @@ Ruby on Rails 7.2
 daisyUI 4( with tailwind 3 )
 Figaro
 PostgreSQL
-High_Voltage
-Active_Storage
+Active_Storage for upload file
 Kaminari
 Mina
 Puma
