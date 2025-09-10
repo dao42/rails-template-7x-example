@@ -1,0 +1,50 @@
+class Admin::<%= class_name.pluralize %>Controller < Admin::BaseController
+  before_action :set_<%= singular_name %>, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @<%= plural_name %> = <%= class_name %>.page(params[:page]).per(10)
+  end
+
+  def show
+  end
+
+  def new
+    @<%= singular_name %> = <%= class_name %>.new
+  end
+
+  def create
+    @<%= singular_name %> = <%= class_name %>.new(<%= singular_name %>_params)
+
+    if @<%= singular_name %>.save
+      redirect_to admin_<%= singular_name %>_path(@<%= singular_name %>), notice: '<%= humanized_name %> was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @<%= singular_name %>.update(<%= singular_name %>_params)
+      redirect_to admin_<%= singular_name %>_path(@<%= singular_name %>), notice: '<%= humanized_name %> was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @<%= singular_name %>.destroy
+    redirect_to admin_<%= plural_name %>_path, notice: '<%= humanized_name %> was successfully deleted.'
+  end
+
+  private
+
+  def set_<%= singular_name %>
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
+  end
+
+  def <%= singular_name %>_params
+    params.require(:<%= singular_name %>).permit(<%= permit_params %>)
+  end
+end

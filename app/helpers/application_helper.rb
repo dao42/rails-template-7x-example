@@ -60,4 +60,9 @@ module ApplicationHelper
       'Notification'
     end
   end
+
+  # Dynamic validation helpers for admin forms
+  def field_required?(model, field_name)
+    model.class.validators_on(field_name.to_sym).any? { |v| v.is_a?(ActiveModel::Validations::PresenceValidator) }
+  end
 end

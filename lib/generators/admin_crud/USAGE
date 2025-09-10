@@ -1,0 +1,53 @@
+Description:
+    Generate a complete admin CRUD interface for an existing model with beautiful daisyUI styling.
+    This generator automatically detects model fields and creates controller, views, and updates 
+    routes and admin sidebar.
+
+    IMPORTANT: The model must already exist before using this generator.
+
+Example:
+    bin/rails generate admin_crud Product
+
+    This will create:
+        Controller:  app/controllers/admin/products_controller.rb
+        Views:       app/views/admin/products/index.html.erb
+                     app/views/admin/products/show.html.erb
+                     app/views/admin/products/new.html.erb
+                     app/views/admin/products/edit.html.erb
+        Routes:      Updates config/routes.rb with admin namespace
+        Sidebar:     Updates app/views/shared/admin/_sidebar.html.erb
+
+Prerequisites:
+    The model must exist before running this generator. If the model doesn't exist, 
+    you'll see an error message with instructions to create it first.
+
+    Example:
+    bin/rails generate model Product name:string description:text price:decimal active:boolean
+    bin/rails db:migrate
+    bin/rails generate admin_crud Product
+
+Features:
+    - Automatically detects all model fields (except id, created_at, updated_at)
+    - Generates appropriate form fields based on column types
+    - Creates responsive tables with pagination support (Kaminari)
+    - Includes proper validation error handling
+    - Updates admin sidebar with menu item
+    - Follows daisyUI design patterns
+
+Supported field types:
+    string, text, integer, decimal, float, boolean, date, datetime, timestamp, time
+
+Model Requirements:
+    - Model must inherit from ApplicationRecord
+    - Model file should be in app/models/
+    - Database table should exist (run migrations)
+
+Examples:
+    # For existing User model
+    bin/rails generate admin_crud User
+
+    # For existing Article model  
+    bin/rails generate admin_crud Article
+
+    # For existing Category model
+    bin/rails generate admin_crud Category
