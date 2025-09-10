@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   MIN_PASSWORD = 4
 
-  has_secure_password
+  has_secure_password validations: false
 
   generates_token_for :email_verification, expires_in: 2.days do
     email
@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 4 }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password, allow_nil: true, length: { minimum: MIN_PASSWORD }
+  validates :password, allow_nil: true, length: { minimum: MIN_PASSWORD }, if: :password_required?
 
   normalizes :email, with: -> { _1.strip.downcase }
 
@@ -23,4 +23,27 @@ class User < ApplicationRecord
   after_update if: :password_digest_previously_changed? do
     sessions.where.not(id: Current.session).delete_all
   end
+
+  # OAuth methods
+  def self.from_omniauth(auth)
+    find_or_create_by(email: auth.info.email) do |user|
+      user.name = auth.info.name
+      user.email = auth.info.email
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.verified = true
+    end
+  end
+
+  def oauth_user?
+    provider.present? && uid.present?
+  end
+
+  private
+
+  def password_required?
+    return false if oauth_user?
+    password_digest.blank? || password.present?
+  end
+
 end
