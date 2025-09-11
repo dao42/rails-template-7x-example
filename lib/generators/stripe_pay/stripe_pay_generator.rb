@@ -2,6 +2,9 @@ class StripePayGenerator < Rails::Generators::Base
   source_root File.expand_path('templates', __dir__)
 
   desc "Generate Stripe payment integration with Order model - creates order first, then processes payment"
+  
+  class_option :for_test, type: :boolean, default: false, 
+               desc: "Generate order new/create functionality for testing (includes new order form and controller actions)"
 
   def add_stripe_gem
     gemfile_path = "Gemfile"
@@ -69,7 +72,9 @@ class StripePayGenerator < Rails::Generators::Base
   end
 
   def generate_views
-    template "views/new.html.erb", "app/views/orders/new.html.erb"
+    if options[:for_test]
+      template "views/new.html.erb", "app/views/orders/new.html.erb"
+    end
     template "views/show.html.erb", "app/views/orders/show.html.erb"
     template "views/success.html.erb", "app/views/orders/success.html.erb"
     template "views/failure.html.erb", "app/views/orders/failure.html.erb"
@@ -80,16 +85,29 @@ class StripePayGenerator < Rails::Generators::Base
   end
 
   def add_routes
-    route_content = <<~ROUTES
-      resources :orders, only: [:new, :create, :show] do
-        member do
-          post :pay
-          get :success
-          get :failure
+    if options[:for_test]
+      route_content = <<~ROUTES
+        resources :orders, only: [:new, :create, :show] do
+          member do
+            post :pay
+            get :success
+            get :failure
+          end
         end
-      end
-      post '/webhooks/stripe', to: 'orders#webhook'
-    ROUTES
+        post '/webhooks/stripe', to: 'orders#webhook'
+      ROUTES
+    else
+      route_content = <<~ROUTES
+        resources :orders, only: [:show] do
+          member do
+            post :pay
+            get :success
+            get :failure
+          end
+        end
+        post '/webhooks/stripe', to: 'orders#webhook'
+      ROUTES
+    end
     
     route route_content
   end
@@ -191,9 +209,15 @@ class StripePayGenerator < Rails::Generators::Base
     say "\n4. Set up Stripe webhook endpoint in your Stripe dashboard:", :cyan
     say "   Endpoint URL: https://yourdomain.com/webhooks/stripe"
     say "   Events: checkout.session.completed, checkout.session.expired"
-    say "\n5. Test the payment flow by visiting:", :cyan
-    say "   1. Create order: /orders/new"
-    say "   2. View order and initiate payment: /orders/:id" 
+    say "\n5. Test the payment flow:", :cyan
+    if options[:for_test]
+      say "   1. Create order: /orders/new"
+      say "   2. View order and initiate payment: /orders/:id"
+    else
+      say "   - Create orders programmatically in your application"
+      say "   - View order and initiate payment: /orders/:id"
+      say "   - Note: Order creation form not generated (use --for-test to include it)"
+    end
     say "\n6. Access admin panel to manage orders:", :cyan
     say "   /admin/orders"
     say "\n" + "="*60, :green

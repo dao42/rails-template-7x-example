@@ -6,12 +6,15 @@ Description:
 Example:
     bin/rails generate stripe_pay
 
+    For testing with order creation form:
+    bin/rails generate stripe_pay --for-test
+
     This will create:
         Migration:  db/migrate/create_orders.rb
         Model:      app/models/order.rb
         Controller: app/controllers/orders_controller.rb
         Service:    app/services/stripe_payment_service.rb
-        Views:      app/views/orders/new.html.erb
+        Views:      app/views/orders/new.html.erb (only with --for-test)
                    app/views/orders/show.html.erb
                    app/views/orders/success.html.erb
                    app/views/orders/failure.html.erb
@@ -33,12 +36,18 @@ Prerequisites:
     - Kaminari for pagination
     - daisyUI with Tailwind CSS for styling
 
+Options:
+    --for-test: Generate order creation form and related functionality for testing
+                (includes new/create actions in controller and new.html.erb view)
+
 After running the generator:
     1. Run bundle install (if stripe gem wasn't installed)
     2. Run rails db:migrate
     3. Configure Stripe keys in config/application.yml
     4. Set up Stripe webhook endpoint
-    5. Test the payment flow at /orders/new
+    5. Test the payment flow:
+       - With --for-test: Create orders at /orders/new
+       - Without --for-test: Create orders programmatically in your app
 
 Features included:
     - Complete Order model with validations and status methods
