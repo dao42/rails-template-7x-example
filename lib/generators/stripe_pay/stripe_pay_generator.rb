@@ -142,22 +142,35 @@ class StripePayGenerator < Rails::Generators::Base
   end
 
   def add_to_application_yml
-    application_yml_example = "config/application.yml.example"
-    if File.exist?(application_yml_example)
-      content = File.read(application_yml_example)
+    stripe_config = <<~STRIPE
       
-      stripe_config = <<~STRIPE
-        
-        # Stripe Configuration
-        STRIPE_PUBLISHABLE_KEY: "pk_test_your_publishable_key_here"
-        STRIPE_SECRET_KEY: "sk_test_your_secret_key_here"
-        STRIPE_WEBHOOK_SECRET: "whsec_your_webhook_secret_here"
-      STRIPE
+      # Stripe Configuration
+      STRIPE_PUBLISHABLE_KEY: "pk_test_your_publishable_key_here"
+      STRIPE_SECRET_KEY: "sk_test_your_secret_key_here"
+      STRIPE_WEBHOOK_SECRET: "whsec_your_webhook_secret_here"
+    STRIPE
+
+    # Update application.yml.example
+    add_stripe_config_to_file("config/application.yml.example", stripe_config)
+    
+    # Update application.yml if it exists
+    add_stripe_config_to_file("config/application.yml", stripe_config)
+  end
+
+  private
+
+  def add_stripe_config_to_file(file_path, stripe_config)
+    if File.exist?(file_path)
+      content = File.read(file_path)
       
       unless content.include?("STRIPE_PUBLISHABLE_KEY")
-        File.write(application_yml_example, content + stripe_config)
-        say "Added Stripe configuration to application.yml.example", :green
+        File.write(file_path, content + stripe_config)
+        say "Added Stripe configuration to #{File.basename(file_path)}", :green
+      else
+        say "Stripe configuration already exists in #{File.basename(file_path)}", :yellow
       end
+    else
+      say "#{File.basename(file_path)} not found, skipping...", :yellow
     end
   end
 
