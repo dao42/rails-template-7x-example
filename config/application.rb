@@ -20,6 +20,9 @@ module Myapp
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
+    # skip credentials
+    config.require_master_key = false
+
     config.generators.assets = false
     config.generators.helper = false
     # Initialize configuration defaults for originally generated Rails version.
