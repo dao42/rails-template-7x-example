@@ -2,6 +2,14 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :pay, :success, :failure]
   skip_before_action :verify_authenticity_token, only: [:webhook]
 
+  def index
+    # TODO: Replace this with proper business logic to avoid security issues
+    # Consider implementing user authentication and authorization to ensure users
+    # can only view their own orders, not all orders in the system.
+    # Example: @orders = current_user.orders.order(created_at: :desc).page(params[:page])
+    @orders = Order.order(created_at: :desc).page(params[:page])
+  end
+
 <% if options[:for_test] -%>
   def new
     @order = Order.new

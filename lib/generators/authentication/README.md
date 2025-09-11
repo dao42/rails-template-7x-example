@@ -1,64 +1,64 @@
 # Authentication Generator
 
-这是一个 Rails generator，用于生成完整的用户认证系统。它基于现代 Rails 7+ 特性构建，提供了安全、灵活的认证解决方案。
+This is a Rails generator that creates a complete user authentication system. Built on modern Rails 7+ features, it provides a secure and flexible authentication solution.
 
-## 特性
+## Features
 
-- ✅ 用户注册和登录
-- ✅ 会话管理（支持多设备）
-- ✅ 密码管理（修改密码）
-- ✅ 邮箱验证（可选）
-- ✅ 密码重置（可选）
-- ✅ OAuth 集成（可选）
-- ✅ 用户邀请系统
-- ✅ 现代化 UI（DaisyUI + Tailwind CSS）
-- ✅ 邮件模板
-- ✅ 安全最佳实践
+- ✅ User registration and login
+- ✅ Session management (multi-device support)
+- ✅ Password management (change password)
+- ✅ Email verification (optional)
+- ✅ Password reset (optional)
+- ✅ OAuth integration (optional)
+- ✅ User invitation system
+- ✅ Modern UI (DaisyUI + Tailwind CSS)
+- ✅ Email templates
+- ✅ Security best practices
 
-## 使用方法
+## Usage
 
-### 基本用法
+### Basic Usage
 
 ```bash
-# 生成完整的认证系统
+# Generate complete authentication system
 bin/rails generate authentication
 ```
 
-### 注意事项
+### Notes
 
-此 generator 会生成完整的认证系统，包括所有功能。如果你不需要某些功能（如 OAuth、邮箱验证等），可以在生成后手动删除相应的文件。
+This generator creates a complete authentication system with all features. If you don't need certain features (like OAuth, email verification, etc.), you can manually remove the corresponding files after generation.
 
-## 生成后的步骤
+## Post-Generation Steps
 
-1. **运行数据库迁移**
+1. **Run database migrations**
    ```bash
    rails db:migrate
    ```
 
-2. **添加必要的 Gem**
-   确保 Gemfile 中包含：
+2. **Add required gems**
+   Ensure your Gemfile includes:
    ```ruby
    gem 'bcrypt', '~> 3.1.7'
-   # 如果使用 OAuth
+   # If using OAuth
    gem 'omniauth'
    gem 'omniauth-rails_csrf_protection'
    ```
 
-3. **配置邮件设置**
-   在 `config/environments/development.rb` 和 `config/environments/production.rb` 中配置邮件设置。
+3. **Configure mail settings**
+   Configure mail settings in `config/environments/development.rb` and `config/environments/production.rb`.
 
-4. **配置 OAuth（如果需要）**
-   编辑 `config/initializers/omniauth.rb` 文件，添加你的 OAuth 提供商配置。
+4. **Configure OAuth (if needed)**
+   Edit `config/initializers/omniauth.rb` file and add your OAuth provider configurations.
 
-5. **自定义样式**
-   根据需要调整视图文件以匹配你的应用设计。
+5. **Customize styles**
+   Adjust view files as needed to match your application design.
 
-## 生成的文件结构
+## Generated File Structure
 
 ```
 app/
 ├── controllers/
-│   ├── application_controller.rb (插入认证方法)
+│   ├── application_controller.rb (authentication methods inserted)
 │   ├── sessions_controller.rb
 │   ├── registrations_controller.rb
 │   ├── passwords_controller.rb
@@ -86,27 +86,30 @@ app/
 config/
 ├── initializers/
 │   └── omniauth.rb
-└── routes.rb (修改)
+└── routes.rb (modified)
 
 db/migrate/
 ├── create_users.rb
 └── create_sessions.rb
 ```
 
-## 路由
+## Routes
 
-生成器会自动添加以下路由：
+The generator automatically adds the following routes:
 
 ```ruby
-# 基本认证
+# Basic authentication
 get  "sign_in", to: "sessions#new"
 post "sign_in", to: "sessions#create"
 get  "sign_up", to: "registrations#new" 
 post "sign_up", to: "registrations#create"
-resources :sessions, only: [:index, :show, :destroy]
+resource :session, only: [:new, :show] do
+  get :devices, on: :member
+  delete :destroy_one, on: :member
+end
 resource  :password, only: [:edit, :update]
 
-# 身份管理
+# Identity management
 namespace :identity do
   resource :email, only: [:edit, :update]
   resource :email_verification, only: [:show, :create]
@@ -118,45 +121,45 @@ get  "/auth/failure", to: "sessions/omniauth#failure"
 get  "/auth/:provider/callback", to: "sessions/omniauth#create"
 post "/auth/:provider/callback", to: "sessions/omniauth#create"
 
-# 邀请
+# Invitations
 resource :invitation, only: [:new, :create]
 ```
 
-## 安全特性
+## Security Features
 
-- 使用 `has_secure_password` 进行密码哈希
-- 会话令牌存储在 HttpOnly cookies 中
-- 密码重置令牌有时间限制（20分钟）
-- 邮箱验证令牌有时间限制（2天）
-- 自动清理已更改密码用户的其他会话
-- CSRF 保护
-- 现代浏览器支持检查
+- Uses `has_secure_password` for password hashing
+- Session tokens stored in HttpOnly cookies
+- Password reset tokens have time limits (20 minutes)
+- Email verification tokens have time limits (2 days)
+- Automatically clears other sessions when user changes password
+- CSRF protection
+- Modern browser support checking
 
-## 自定义
+## Customization
 
-### 修改密码最小长度
+### Modify minimum password length
 
-在生成的 `User` 模型中修改 `MIN_PASSWORD` 常量：
+Modify the `MIN_PASSWORD` constant in the generated `User` model:
 
 ```ruby
 class User < ApplicationRecord
-  MIN_PASSWORD = 8 # 改为你需要的长度
+  MIN_PASSWORD = 8 # Change to your desired length
   # ...
 end
 ```
 
-### 添加用户字段
+### Add user fields
 
-你可以创建迁移来添加额外的用户字段：
+You can create migrations to add additional user fields:
 
 ```bash
 rails generate migration AddFieldsToUsers name:string avatar:attachment
 ```
 
-### 自定义视图
+### Customize views
 
-所有生成的视图都使用 DaisyUI 组件，你可以根据需要修改样式。
+All generated views use DaisyUI components, and you can modify the styles as needed.
 
-## 许可证
+## License
 
-此 generator 遵循与 Rails 相同的 MIT 许可证。
+This generator follows the same MIT license as Rails.

@@ -72,6 +72,7 @@ class StripePayGenerator < Rails::Generators::Base
   end
 
   def generate_views
+    template "views/index.html.erb", "app/views/orders/index.html.erb"
     if options[:for_test]
       template "views/new.html.erb", "app/views/orders/new.html.erb"
     end
@@ -87,7 +88,7 @@ class StripePayGenerator < Rails::Generators::Base
   def add_routes
     if options[:for_test]
       route_content = <<~ROUTES
-        resources :orders, only: [:new, :create, :show] do
+        resources :orders, only: [:index, :new, :create, :show] do
           member do
             post :pay
             get :success
@@ -98,7 +99,7 @@ class StripePayGenerator < Rails::Generators::Base
       ROUTES
     else
       route_content = <<~ROUTES
-        resources :orders, only: [:show] do
+        resources :orders, only: [:index, :show] do
           member do
             post :pay
             get :success
@@ -210,12 +211,13 @@ class StripePayGenerator < Rails::Generators::Base
     say "   Endpoint URL: https://yourdomain.com/webhooks/stripe"
     say "   Events: checkout.session.completed, checkout.session.expired"
     say "\n5. Test the payment flow:", :cyan
+    say "   1. View all orders: /orders"
     if options[:for_test]
-      say "   1. Create order: /orders/new"
-      say "   2. View order and initiate payment: /orders/:id"
+      say "   2. Create order: /orders/new"
+      say "   3. View order and initiate payment: /orders/:id"
     else
-      say "   - Create orders programmatically in your application"
-      say "   - View order and initiate payment: /orders/:id"
+      say "   2. Create orders programmatically in your application"
+      say "   3. View order and initiate payment: /orders/:id"
       say "   - Note: Order creation form not generated (use --for-test to include it)"
     end
     say "\n6. Access admin panel to manage orders:", :cyan

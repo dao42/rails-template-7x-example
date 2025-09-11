@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :destroy]
+  before_action :authenticate_user!, only: [:devices, :destroy_one]
 
-  def index
+  def devices
     @sessions = Current.user.sessions.order(created_at: :desc)
   end
 
@@ -20,14 +20,15 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    if params[:id].present?
-      @session = Current.user.sessions.find(params[:id])
-    else
-      @session = Current.session
-    end
-
+    @session = Current.session
     @session.destroy!
     cookies.delete(:session_token)
     redirect_to(_strong_root_path, notice: "That session has been logged out")
+  end
+
+  def destroy_one
+    @session = Current.user.sessions.find(params[:id])
+    @session.destroy!
+    redirect_to(session_devices_path, notice: "That session has been logged out")
   end
 end

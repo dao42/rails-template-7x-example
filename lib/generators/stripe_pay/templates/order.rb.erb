@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   validates :customer_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :product_name, presence: true, length: { minimum: 2, maximum: 200 }
   validates :amount, presence: true, numericality: { greater_than: 0 }
-  validates :currency, presence: true, inclusion: { in: %w[usd eur gbp jpy cad aud] }
+  validates :currency, presence: true
   validates :status, presence: true, inclusion: { in: %w[pending processing paid failed canceled] }
 
   # Scopes
@@ -88,7 +88,7 @@ class Order < ApplicationRecord
   # Search functionality for admin
   scope :search, ->(query) {
     return all if query.blank?
-    
+
     where(
       "customer_name ILIKE :query OR customer_email ILIKE :query OR product_name ILIKE :query OR status ILIKE :query",
       query: "%#{query}%"

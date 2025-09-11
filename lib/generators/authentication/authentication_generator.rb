@@ -48,7 +48,7 @@ class AuthenticationGenerator < Rails::Generators::Base
 
     # User authentication views
     copy_file 'views/sessions/new.html.erb', 'app/views/sessions/new.html.erb'
-    copy_file 'views/sessions/index.html.erb', 'app/views/sessions/index.html.erb'
+    copy_file 'views/sessions/devices.html.erb', 'app/views/sessions/devices.html.erb'
     copy_file 'views/registrations/new.html.erb', 'app/views/registrations/new.html.erb'
     copy_file 'views/passwords/edit.html.erb', 'app/views/passwords/edit.html.erb'
 
@@ -341,7 +341,10 @@ class AuthenticationGenerator < Rails::Generators::Base
   delete 'sign_out', to: 'sessions#destroy', as: :sign_out
   get  "sign_up", to: "registrations#new"
   post "sign_up", to: "registrations#create"
-  resources :sessions, only: [:index, :new, :show, :destroy]
+  resource :session, only: [:new, :show] do
+    get :devices, on: :member
+    delete :destroy_one, on: :member
+  end
   resources :registrations, only: [:new, :create]
   resource  :password, only: [:edit, :update]
 

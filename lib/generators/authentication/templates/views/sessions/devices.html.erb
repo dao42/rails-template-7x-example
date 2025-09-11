@@ -22,7 +22,7 @@
             </p>
 
             <p class="mt-3">
-              <%= button_to "Log out", session, method: :delete, class: "btn btn-error btn-sm" %>
+              <%= button_to "Log out", session_destroy_one_path(id: session.id), method: :delete, class: "btn btn-error btn-sm" %>
             </p>
           </div>
         <% end %>
