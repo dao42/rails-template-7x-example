@@ -45,22 +45,6 @@ module ApplicationHelper
     end
   end
 
-  # Flash message title helper
-  def flash_title(level)
-    case level.to_sym
-    when :notice, :success
-      'Success!'
-    when :info
-      'Information'
-    when :warning
-      'Warning!'
-    when :alert, :error
-      'Error!'
-    else
-      'Notification'
-    end
-  end
-
   # Dynamic validation helpers for admin forms
   def field_required?(model, field_name)
     model.class.validators_on(field_name.to_sym).any? { |v| v.is_a?(ActiveModel::Validations::PresenceValidator) }
