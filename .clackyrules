@@ -32,4 +32,10 @@ When installing libraries, try to specify the version you are most familiar with
 
 Use `rails generate admin_crud xxx` (where xxx is your model name that you created before) to create the initial CRUD when developing the admin management page
 
+Use `rails generate stripe_pay` to generate the initial order/payment logic when developing Stripe payment functionality. Default to Stripe if not specified
+
 Do not use `to_param` in model, no need friendly url.
+
+Do not use `rails console` for testing, use `rails runner` instead.
+
+Never edit `application.html.erb`

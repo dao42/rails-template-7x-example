@@ -1,0 +1,55 @@
+Description:
+    The stripe_pay generator creates a complete Stripe payment integration with Order model 
+    and basic payment flow. This includes the Order model, controller, views, admin interface,
+    Stripe service, and all necessary configuration.
+
+Example:
+    bin/rails generate stripe_pay
+
+    This will create:
+        Migration:  db/migrate/create_orders.rb
+        Model:      app/models/order.rb
+        Controller: app/controllers/orders_controller.rb
+        Service:    app/services/stripe_payment_service.rb
+        Views:      app/views/orders/new.html.erb
+                   app/views/orders/show.html.erb
+                   app/views/orders/success.html.erb
+                   app/views/orders/failure.html.erb
+        Admin:      app/controllers/admin/orders_controller.rb
+                   app/views/admin/orders/index.html.erb
+                   app/views/admin/orders/show.html.erb
+        Config:     config/initializers/stripe.rb
+        Routes:     Added to config/routes.rb
+
+    The generator will also:
+        - Add Order menu item to admin sidebar
+        - Update application.yml.example with Stripe configuration
+        - Display next steps for completing the setup
+
+Prerequisites:
+    - Stripe gem must be installed: gem 'stripe'
+    - Rails 7.x application
+    - PostgreSQL database
+    - Kaminari for pagination
+    - daisyUI with Tailwind CSS for styling
+
+After running the generator:
+    1. Run bundle install (if stripe gem wasn't installed)
+    2. Run rails db:migrate
+    3. Configure Stripe keys in config/application.yml
+    4. Set up Stripe webhook endpoint
+    5. Test the payment flow at /orders/new
+
+Features included:
+    - Complete Order model with validations and status methods
+    - Development-friendly status checking (auto-syncs with Stripe on success page)
+    - Production-ready webhook handling for status updates
+    - Stripe Checkout Session integration
+    - Webhook handling for payment status updates
+    - Responsive UI with Tailwind CSS and daisyUI
+    - Admin interface for order management
+    - Comprehensive error handling
+    - Payment success/failure pages
+    - Order status tracking
+    - Search and filtering in admin
+    - Pagination with Kaminari
