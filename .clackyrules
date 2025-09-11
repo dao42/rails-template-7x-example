@@ -24,11 +24,9 @@ In most cases, restarting project is unnecessary because Rails automatically hot
 
 When you need to register/authentication system, don't write it yourself. Use `rails generate authentication` generate it first.
 
-Use `rails generate stripe_pay` to generate the initial Order model and related controller/view logic not generate by yourself when developing order/payment functionality. The public/private key is at `docs/stripe_develop_key.md`.
+Use `rails generate stripe_pay` to generate the initial Order model and related controller/view logic not generate by yourself when developing order/payment functionality.
 
 Should only need to support Stripe payments when developing order/payment functionality by default.
-
-Use these key `docs/llm_develop_key.md` when developing AI (LLM based) app by default.
 
 ### Some important tips when coding
 
@@ -46,8 +44,8 @@ Use `rails generate admin_crud xxx` (where xxx is your model name that you creat
 
 Do not use `to_param` in model, no need friendly url.
 
-Do not use `rails console` for testing, use `rails runner` instead.
+Do not use `rails console`, use `rails runner` instead if need testing.
 
 ### Some files never edit
 
-Never edit `application.html.erb`
+Never edit `application.html.erb`, update `_navbar.html.erb` instead if need add navbar.
