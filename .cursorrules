@@ -32,7 +32,9 @@ When installing libraries, try to specify the version you are most familiar with
 
 Use `rails generate admin_crud xxx` (where xxx is your model name that you created before) to create the initial CRUD when developing the admin management page
 
-Use `rails generate stripe_pay` to generate the initial order/payment logic when developing Stripe payment functionality. Default to Stripe if not specified
+Use `rails generate stripe_pay` to generate the initial order/payment logic when developing Stripe payment functionality. Default to Stripe if not specified. Development Mode key is at docs/stripe_develop_key.md
+
+use these key docs/llm_develop_key.md when developing AI (LLM based) app
 
 Do not use `to_param` in model, no need friendly url.
 
