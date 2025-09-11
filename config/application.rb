@@ -22,13 +22,6 @@ module Myapp
 
     # skip credentials
     config.require_master_key = false
-    config.secret_key_base = ENV.fetch('SECRET_KEY_BASE') do
-      if Rails.env.development? || Rails.env.test?
-        'development_secret_key_base_' + ('a' * 100)
-      else
-        raise 'SECRET_KEY_BASE environment variable must be set'
-      end
-    end
 
     config.generators.assets = false
     config.generators.helper = false
