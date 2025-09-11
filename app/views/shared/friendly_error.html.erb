@@ -1,0 +1,128 @@
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content text-center">
+    <div class="max-w-2xl w-full">
+      <!-- Warning Icon -->
+      <div class="avatar placeholder mx-auto mb-8">
+        <div class="bg-warning text-warning-content w-24 rounded-full">
+          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-5xl font-bold mb-4">Something Went Wrong</h1>
+      <p class="text-lg mb-8 text-base-content/80">We encountered an issue while processing your request. Please try again later!</p>
+
+      <% if Rails.env.development? && @original_exception %>
+        <!-- Development Info -->
+        <div class="mb-8 text-left">
+          <div class="card bg-base-100 shadow-lg">
+            <div class="card-body">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-medium">Development Debug Info</h3>
+                <button type="button" onclick="copyErrorDetails()" class="btn btn-sm btn-outline btn-primary" id="copy-btn">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                  Copy Error
+                </button>
+              </div>
+
+              <div class="collapse collapse-arrow bg-base-200">
+                <input type="checkbox" />
+                <div class="collapse-title text-sm font-medium">
+                  Click to view error details
+                </div>
+                <div class="collapse-content">
+                  <div class="bg-base-300 rounded-lg p-4 font-mono text-sm" id="error-details">
+                    <div class="mb-2">
+                      <span class="font-semibold text-info">URL:</span> <%= @error_url %>
+                    </div>
+                    <div class="mb-4">
+                      <span class="font-semibold text-error">Message:</span>
+                      <div class="mt-1 bg-base-100 p-2 rounded text-xs break-all">
+                        <%= @original_exception.message %>
+                      </div>
+                    </div>
+
+                    <% if @original_exception.backtrace %>
+                      <div class="mb-2">
+                        <span class="font-semibold text-warning">Stack Trace (First 10 lines):</span>
+                      </div>
+                      <div class="bg-base-100 rounded p-2 text-xs overflow-x-auto">
+                        <% @original_exception.backtrace.first(10).each_with_index do |line, index| %>
+                          <div class="mb-1">
+                            <span class="text-primary font-semibold"><%= index + 1 %>:</span>
+                            <span class="text-base-content/70"><%= line %></span>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%= link_to "Back to Home", '/', class: "btn btn-primary" %>
+        <button type="button" onclick="developPage()" class="btn btn-outline">
+          Fix in Chatbox
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  <!-- TODO: copy error text, send it to chatbox -->
+  function developPage() {
+    const url = window.location.pathname.substring(1);
+
+    if (typeof this.sdk !== 'undefined' && this.sdk.send) {
+      this.sdk.send(url);
+    } else {
+      console.log('SDK not available. Would send URL:', url);
+    }
+  }
+
+  function copyErrorDetails() {
+    // Use ERB-generated error text instead of parsing HTML
+    <% error_text = "URL: #{@error_url}\n\nMessage:\n#{@original_exception&.message}" %>
+    <% if @original_exception&.backtrace %>
+      <% error_text += "\n\nStack Trace (First 10 lines):\n" %>
+      <% @original_exception.backtrace.first(10).each_with_index do |line, index| %>
+        <% error_text += "#{index + 1}. #{line}\n" %>
+      <% end %>
+    <% end %>
+    const errorText = `<%= j(error_text) %>`;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(errorText).then(() => {
+      // Show success feedback
+      const button = document.getElementById('copy-btn');
+      const originalText = button.innerHTML;
+      button.innerHTML = `
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Copied!
+      `;
+      button.classList.remove('btn-outline', 'btn-primary');
+      button.classList.add('btn-success');
+
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.classList.remove('btn-success');
+        button.classList.add('btn-outline', 'btn-primary');
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+      alert('Failed to copy error details');
+    });
+  }
+</script>
