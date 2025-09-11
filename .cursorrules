@@ -40,6 +40,8 @@ Use `rails generate service xxx` to generate a service file, not generate by you
 
 When installing libraries, try to specify the version you are most familiar with (e.g., npm, bundle) instead of the latest version.
 
+Always keep UI responsiveness in mind when coding for user interfaces.
+
 Use `rails generate admin_crud xxx` (where xxx is your model name that you created before) to create the initial CRUD when developing the admin management page
 
 Do not use `to_param` in model, no need friendly url.
