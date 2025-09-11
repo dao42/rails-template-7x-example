@@ -15,10 +15,6 @@ gem "kaminari"
 gem "good_job", "~> 4.6"
 gem "rails-i18n", "~> 7.0.10"
 gem 'mini_magick', '~> 5.3', '>= 5.3.1'
-gem "mina", "~> 1.2.2", require: false
-gem "mina-ng-puma", ">= 1.4.0", require: false
-gem "mina-multistage", require: false
-gem "mina-logs", require: false
 
 group :development do
   gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]

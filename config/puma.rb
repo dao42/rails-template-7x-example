@@ -1,15 +1,8 @@
-if ENV['RAILS_ENV'] == 'production'
-  app_root = '/data/www/myapp/shared'
-  pidfile "#{app_root}/tmp/pids/puma.pid"
-  state_path "#{app_root}/tmp/pids/puma.state"
-  bind "unix://#{app_root}/tmp/sockets/puma.sock"
-  activate_control_app "unix://#{app_root}/tmp/sockets/pumactl.sock"
-  daemonize true
-  workers 2
-  threads 8, 16
-  prune_bundler
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
+threads threads_count, threads_count
 
-  stdout_redirect "#{app_root}/log/puma_access.log", "#{app_root}/log/puma_error.log", true
-else
-  plugin :tmp_restart
-end
+port ENV.fetch("PORT", 3000)
+
+plugin :tmp_restart
+
+pidfile ENV["PIDFILE"] if ENV["PIDFILE"]

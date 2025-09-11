@@ -62,6 +62,5 @@ Default password: admin
 * postgres
 * active_storage
 * kaminari
-* mina
 * puma
 * rspec
