@@ -12,6 +12,11 @@ class StripePaymentService < ApplicationService
 
   # Create Checkout Session for Stripe
   def create_checkout_session
+    # Check if order is in valid state for payment
+    unless order.pending? || order.failed?
+      return { success: false, error: "Order is not in a valid state for payment (current status: #{order.status})" }
+    end
+
     begin
       @checkout_session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],

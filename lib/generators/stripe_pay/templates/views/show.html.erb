@@ -44,8 +44,37 @@
     <div class="px-8 py-6 bg-white border-t border-gray-200">
       <div class="flex items-center justify-between">
         <%%= link_to "← Back to Home", '/', class: "btn btn-ghost" %>
-        <%%= link_to "Try Again", new_order_path, class: "btn btn-primary" if @order.failed? %>
+        
+        <%% if @order.pending? %>
+          <%%= link_to "Proceed to Payment", pay_order_path(@order), 
+              method: :post,
+              class: "btn btn-primary btn-lg",
+              data: { 
+                confirm: "You will be redirected to Stripe's secure checkout page. Continue?",
+                disable_with: "Processing..." 
+              } %>
+        <%% elsif @order.failed? %>
+          <%%= link_to "Try Payment Again", pay_order_path(@order), 
+              method: :post,
+              class: "btn btn-primary",
+              data: { 
+                confirm: "You will be redirected to Stripe's secure checkout page. Continue?",
+                disable_with: "Processing..." 
+              } %>
+        <%% elsif @order.paid? %>
+          <span class="badge badge-success badge-lg">Payment Completed</span>
+        <%% elsif @order.processing? %>
+          <span class="badge badge-warning badge-lg">Payment Processing</span>
+        <%% end %>
       </div>
+      
+      <%% if @order.pending? %>
+        <div class="mt-6 p-4 bg-green-50 rounded-lg">
+          <p class="text-sm text-green-700">
+            <strong>Ready for Payment:</strong> Your order has been created successfully. Click "Proceed to Payment" to complete your purchase securely through Stripe.
+          </p>
+        </div>
+      <%% end %>
     </div>
   </div>
 </div>

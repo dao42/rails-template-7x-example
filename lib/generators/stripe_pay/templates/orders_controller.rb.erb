@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :success, :failure]
+  before_action :set_order, only: [:show, :pay, :success, :failure]
   skip_before_action :verify_authenticity_token, only: [:webhook]
 
   def new
@@ -10,30 +10,30 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     
     if @order.save
-      # Create Stripe Payment Intent
-      stripe_service = StripePaymentService.new(@order)
-      result = stripe_service.call
-      
-      if result[:success]
-        @checkout_session = result[:checkout_session]
-        # Redirect to Stripe Checkout
-        redirect_to @checkout_session.url, allow_other_host: true
-      else
-        flash.now[:alert] = "Payment initialization failed: #{result[:error]}"
-        render :new, status: :unprocessable_entity
-      end
+      # Redirect to order show page instead of directly to payment
+      redirect_to @order, notice: 'Order was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @order = Order.find(params[:id])
+    # Show order details and payment button
+    # Payment will be initiated from this page
+  end
+
+  def pay
+    # Initialize payment for existing order
+    stripe_service = StripePaymentService.new(@order)
+    result = stripe_service.call
     
-    # For Checkout Session, we just show order details
-    # Payment happens on Stripe's hosted page
-    unless @order.stripe_payment_intent_id.present?
-      redirect_to new_order_path, alert: 'Invalid order.'
+    if result[:success]
+      @checkout_session = result[:checkout_session]
+      # Redirect to Stripe Checkout
+      redirect_to @checkout_session.url, allow_other_host: true
+    else
+      flash[:alert] = "Payment initialization failed: #{result[:error]}"
+      redirect_to @order
     end
   end
 

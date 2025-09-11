@@ -16,9 +16,21 @@ RSpec
 
 Do not add or remove any components and avoid upgrading or downgrading components lightly.
 
-### Some important tips when coding
+## When you should restart project
+
+In most cases, restarting project is unnecessary because Rails automatically hot-reloads code changes. However, changes to files within the `config/` directory (except `config/routes.rb`), including updates to configurations like `config/application.yml`, explicitly require a project restart.
+
+### Some import tips when Developing user authentication/payment/LLM-calling(AI APP) system
 
 When you need to register/authentication system, don't write it yourself. Use `rails generate authentication` generate it first.
+
+Use `rails generate stripe_pay` to generate the initial Order model and related controller/view logic not generate by yourself when developing order/payment functionality. The public/private key is at `docs/stripe_develop_key.md`.
+
+Should only need to support Stripe payments when developing order/payment functionality by default.
+
+Use these key `docs/llm_develop_key.md` when developing AI (LLM based) app by default.
+
+### Some important tips when coding
 
 Do not generate any fake data that should originally be in the database for users.
 
@@ -32,12 +44,10 @@ When installing libraries, try to specify the version you are most familiar with
 
 Use `rails generate admin_crud xxx` (where xxx is your model name that you created before) to create the initial CRUD when developing the admin management page
 
-Use `rails generate stripe_pay` to generate the initial order/payment logic when developing Stripe payment functionality. Default to Stripe if not specified. Development Mode key is at docs/stripe_develop_key.md
-
-use these key docs/llm_develop_key.md when developing AI (LLM based) app
-
 Do not use `to_param` in model, no need friendly url.
 
 Do not use `rails console` for testing, use `rails runner` instead.
+
+### Some files never edit
 
 Never edit `application.html.erb`

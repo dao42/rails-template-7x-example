@@ -1,7 +1,7 @@
 class StripePayGenerator < Rails::Generators::Base
   source_root File.expand_path('templates', __dir__)
 
-  desc "Generate Stripe payment integration with Order model and basic payment flow"
+  desc "Generate Stripe payment integration with Order model - creates order first, then processes payment"
 
   def add_stripe_gem
     gemfile_path = "Gemfile"
@@ -83,6 +83,7 @@ class StripePayGenerator < Rails::Generators::Base
     route_content = <<~ROUTES
       resources :orders, only: [:new, :create, :show] do
         member do
+          post :pay
           get :success
           get :failure
         end
@@ -191,7 +192,8 @@ class StripePayGenerator < Rails::Generators::Base
     say "   Endpoint URL: https://yourdomain.com/webhooks/stripe"
     say "   Events: checkout.session.completed, checkout.session.expired"
     say "\n5. Test the payment flow by visiting:", :cyan
-    say "   /orders/new"
+    say "   1. Create order: /orders/new"
+    say "   2. View order and initiate payment: /orders/:id" 
     say "\n6. Access admin panel to manage orders:", :cyan
     say "   /admin/orders"
     say "\n" + "="*60, :green
