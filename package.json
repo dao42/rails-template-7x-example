@@ -4,8 +4,7 @@
   "devDependencies": {
   },
   "scripts": {
-    "build": "run-p build:*",
-    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap=inline --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap=inline --format=esm --outdir=app/assets/builds --public-path=/assets",
     "watch:js": "esbuild app/javascript/*.* --bundle --sourcemap=inline --format=esm --outdir=app/assets/builds --public-path=/assets --watch",
     "build:css": "run-p build:css:*",
     "build:css:app": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css",
