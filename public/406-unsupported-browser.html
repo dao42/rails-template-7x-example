@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your browser is not supported (406)</title>
+  <title>Browser Not Supported (406)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9fafb;
+      color: #374151;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      max-width: 500px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .error-code {
+      font-size: 6rem;
+      font-weight: 800;
+      color: #e5e7eb;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    .browsers {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .browser-link {
+      display: block;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      text-decoration: none;
+      color: #374151;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    .browser-link:hover {
+      border-color: #3b82f6;
+      background: #f0f9ff;
+    }
+    .divider {
+      margin: 2rem 0;
+      border-top: 1px solid #e5e7eb;
+    }
+    .note {
+      font-size: 0.875rem;
+      color: #9ca3af;
+    }
   </style>
 </head>
 
-<body class="rails-default-error-page">
-  <!-- This file lives in public/406-unsupported-browser.html -->
-  <div class="dialog">
-    <div>
-      <h1>Your browser is not supported.</h1>
-      <p>Please upgrade your browser to continue.</p>
+<body>
+  <div class="container">
+    <div class="error-code">406</div>
+    <h1>Browser Not Supported</h1>
+    <p>Your browser is outdated and may not display this website correctly. Please upgrade to a modern browser for the best experience.</p>
+    
+    <div class="browsers">
+      <a href="https://www.google.com/chrome/" class="browser-link" target="_blank">Chrome</a>
+      <a href="https://www.mozilla.org/firefox/" class="browser-link" target="_blank">Firefox</a>
+      <a href="https://www.microsoft.com/edge/" class="browser-link" target="_blank">Edge</a>
+      <a href="https://www.apple.com/safari/" class="browser-link" target="_blank">Safari</a>
     </div>
+    
+    <div class="divider"></div>
+    <p class="note">We recommend using the latest version of any modern browser.</p>
   </div>
 </body>
 </html>

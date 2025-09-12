@@ -29,19 +29,19 @@ module ApplicationHelper
   end
 
 
-  # DaisyUI flash message class helper
+  # DaisyUI flash message class helper with lighter colors
   def flash_daisy_class(level)
     case level.to_sym
     when :notice, :success
-      'alert-success'
+      'bg-green-100 text-green-800 border border-green-200'
     when :info
-      'alert-info'
+      'bg-blue-100 text-blue-800 border border-blue-200'
     when :warning
-      'alert-warning'
+      'bg-yellow-100 text-yellow-800 border border-yellow-200'
     when :alert, :error
-      'alert-error'
+      'bg-red-100 text-red-800 border border-red-200'
     else
-      'alert-info'
+      'bg-blue-100 text-blue-800 border border-blue-200'
     end
   end
 

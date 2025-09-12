@@ -20,7 +20,8 @@
     <%= content_for?(:head) ? yield(:head) : '' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application', type: "module" %>
-    <%= favicon_link_tag asset_path("favicon.ico") %>
+    <!-- Generate new favicon at `images/app-favicon.svg` at the first time, remove this line after generated  -->
+    <%= favicon_link_tag asset_path("app-favicon.svg") %>
   </head>
   <body class="<%= body_class %>">
     <main class="min-h-screen">

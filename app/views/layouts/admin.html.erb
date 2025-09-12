@@ -18,7 +18,7 @@
     <%= content_for?(:head) ? yield(:head) : '' %>
     <%= stylesheet_link_tag 'admin', media: 'all' %>
     <%= javascript_include_tag 'admin', type: "module" %>
-    <%= favicon_link_tag asset_path("favicon.ico") %>
+    <%= favicon_link_tag asset_path("app-favicon.svg") %>
     <script>
       // 防止主题闪烁 - 与 admin.js 逻辑保持一致
       (function() {
