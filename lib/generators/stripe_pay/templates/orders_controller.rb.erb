@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
 
   def pay
     # Initialize payment for existing order
-    stripe_service = StripePaymentService.new(@order)
+    stripe_service = StripePaymentService.new(@order, request)
     result = stripe_service.call
     
     if result[:success]

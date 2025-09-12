@@ -1,4 +1,7 @@
 # Use `rake secret` to generate one key
 SECRET_KEY_BASE: ''
 
+# Default host, used by emailer/payment etc.
+DOMAIN: ''
+
 APPNAME: 'ClackyAI APP'

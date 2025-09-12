@@ -2,8 +2,9 @@ class StripePaymentService < ApplicationService
   include Rails.application.routes.url_helpers
   attr_reader :order, :payment_intent, :checkout_session
 
-  def initialize(order)
+  def initialize(order, request = nil)
     @order = order
+    @request = request
   end
 
   def call
@@ -107,13 +108,11 @@ class StripePaymentService < ApplicationService
   private
 
   def default_host
-    if Rails.env.production?
-      # In production, you should set this in your environment or use request.host
-      Rails.application.config.action_mailer.default_url_options[:host] || 'localhost:3000'
-    else
-      # For development
-      'localhost:3000'
-    end
+    return ENV['DOMAIN'] if ENV['DOMAIN'].present?
+    return "#{@request.host}:#{@request.port}" if @request&.host
+    return Rails.application.routes.default_url_options[:host] if Rails.application.routes.default_url_options[:host].present?
+    return Rails.application.config.action_mailer.default_url_options[:host] if Rails.application.config.action_mailer.default_url_options[:host].present?
+    raise 'No `DOMAIN` environment variable found, stripe payment callback url failed'
   end
 
   def self.handle_checkout_success(checkout_session)
@@ -122,7 +121,7 @@ class StripePaymentService < ApplicationService
 
     order.mark_as_paid!
     Rails.logger.info "Checkout session completed for order #{order.id}"
-    
+
     # Here you can add additional logic like:
     # - Send confirmation email
     # - Update inventory
@@ -143,7 +142,7 @@ class StripePaymentService < ApplicationService
 
     order.mark_as_paid!
     Rails.logger.info "Payment succeeded for order #{order.id}"
-    
+
     # Here you can add additional logic like:
     # - Send confirmation email
     # - Update inventory
