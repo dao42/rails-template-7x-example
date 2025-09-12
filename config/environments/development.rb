@@ -23,6 +23,9 @@ Rails.application.configure do
   config.assets.prefix = "/dev-assets"
   config.assets.quiet = true
 
+  # clacky: disable csrf make test easy
+  config.action_controller.allow_forgery_protection = false
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
