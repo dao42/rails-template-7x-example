@@ -1,4 +1,4 @@
-// base dependency library, it should be only shared by `admin.js` and `application.js`.
+// base dependency library, it should be only imported by `admin.js` and `application.js`.
 //
 import RailsUjs from '@rails/ujs'
 import * as ActiveStorage from '@rails/activestorage'
@@ -6,7 +6,6 @@ import Alpine from 'alpinejs'
 import * as ActionCable from "@rails/actioncable"
 import './channels'
 
-// Start Rails UJS
 RailsUjs.start()
 
 ActiveStorage.start()
@@ -14,6 +13,14 @@ window.ActionCable = ActionCable
 
 Alpine.start()
 window.Alpine = Alpine
+
+document.addEventListener('DOMContentLoaded', () => {
+  const disableRemoteForms = document.querySelectorAll('form[data-remote="true"]');
+
+  disableRemoteForms.forEach(form => {
+    form.removeAttribute('data-remote');
+  });
+});
 
 // Optional: Custom JavaScript for Tailwind-based UI
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,3 +49,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
