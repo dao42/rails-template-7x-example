@@ -19,9 +19,15 @@ Do not add or remove any components and avoid upgrading or downgrading component
 
 In most cases, restarting project is unnecessary because Rails automatically hot-reloads code changes. However, changes to files within the `config/` directory (except `config/routes.rb`), including updates to configurations like `config/application.yml`, explicitly require a project restart.
 
+## Initialize project tips
+
+During the system initialization process, you should prioritize creating a beautiful home page that does not require login. Once completed, directly run the project
+
 ### Some import tips when Developing user authentication/payment/LLM-calling(AI APP) system
 
 When you need to register/authentication system, don't write it yourself. Use `rails generate authentication` generate it first.
+
+During the system initialization process, you should prioritize creating a beautiful home page that does not require login. Once completed, directly run the project
 
 when developing order/payment system, don't write it yourself. Use `rails generate stripe_pay` to generate it first.
 
@@ -49,7 +55,9 @@ Use `rails generate crud xxx [action1] [action2]` (where xxx is your model name 
 
 Do not use `to_param` in model, no need friendly url.
 
-Do not use `rails console`, use `rails runner` when checking code.
+Use `curl` for testing url accessibility, Especially focus on testing the homepage after login.
+
+Do not use `rails console`, use `rails runner` instead if you want insert or check db data.
 
 Write test file in `tmp/`.
 
