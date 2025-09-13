@@ -1,19 +1,7 @@
 class <%= class_name.pluralize %>Controller < ApplicationController
-  <%= before_actions %>
-
 <%= controller_actions %>
 
   private
 
-<% if selected_actions.any? { |action| %w[show edit].include?(action) } || selected_actions.include?('new') %>
-  def set_<%= singular_name %>
-    @<%= singular_name %> = <%= class_name %>.find(params[:id])
-  end
-<% end %>
-
-<% if selected_actions.any? { |action| %w[new edit].include?(action) } %>
-  def <%= singular_name %>_params
-    params.require(:<%= singular_name %>).permit(<%= permit_params %>)
-  end
-<% end %>
+  # Write your private methods here
 end

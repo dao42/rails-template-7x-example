@@ -51,7 +51,7 @@ Always keep UI responsiveness in mind when coding for user interfaces.
 
 Use `rails generate admin_crud xxx` (where xxx is your model name that you created before) to create the initial CRUD when developing the admin management page
 
-Use `rails generate crud xxx [action1] [action2]` (where xxx is your model name that you created before, action is optional(default options generate all actions)) to create the initial CRUD when developing the user-side functionality
+Use `rails generate crud xxx [action1] [action2]` (where xxx is your model name that you created before, action is optional(all actions by default)) to create the initial CRUD when developing the user-side functionality
 
 Do not use `to_param` in model, no need friendly url.
 

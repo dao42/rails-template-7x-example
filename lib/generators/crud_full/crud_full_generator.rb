@@ -1,4 +1,4 @@
-class CrudGenerator < Rails::Generators::NamedBase
+class CrudFullGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
   # Simple data structure to replace OpenStruct
@@ -18,6 +18,20 @@ class CrudGenerator < Rails::Generators::NamedBase
     template "controller.rb.erb", "app/controllers/#{plural_name}_controller.rb"
   end
 
+  def generate_views
+    selected_actions.each do |action|
+      case action
+      when 'index'
+        template "views/index.html.erb", "app/views/#{plural_name}/index.html.erb"
+      when 'show'
+        template "views/show.html.erb", "app/views/#{plural_name}/show.html.erb"
+      when 'new'
+        template "views/new.html.erb", "app/views/#{plural_name}/new.html.erb"
+      when 'edit'
+        template "views/edit.html.erb", "app/views/#{plural_name}/edit.html.erb"
+      end
+    end
+  end
 
   def add_routes
     route "resources :#{plural_name}#{route_options}"
@@ -236,7 +250,7 @@ class CrudGenerator < Rails::Generators::NamedBase
   def index_action
     <<~ACTION
   def index
-    # Write your real logic here
+    @#{plural_name} = #{class_name}.page(params[:page]).per(10)
   end
     ACTION
   end
@@ -244,7 +258,6 @@ class CrudGenerator < Rails::Generators::NamedBase
   def show_action
     <<~ACTION
   def show
-    # Write your real logic here
   end
     ACTION
   end
@@ -252,7 +265,7 @@ class CrudGenerator < Rails::Generators::NamedBase
   def new_action
     <<~ACTION
   def new
-    # Write your real logic here
+    @#{singular_name} = #{class_name}.new
   end
     ACTION
   end
@@ -260,7 +273,13 @@ class CrudGenerator < Rails::Generators::NamedBase
   def create_action
     <<~ACTION
   def create
-    # Write your real logic here
+    @#{singular_name} = #{class_name}.new(#{singular_name}_params)
+
+    if @#{singular_name}.save
+      redirect_to #{singular_name}_path(@#{singular_name}), notice: '#{humanized_name} was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
     ACTION
   end
@@ -268,7 +287,6 @@ class CrudGenerator < Rails::Generators::NamedBase
   def edit_action
     <<~ACTION
   def edit
-    # Write your real logic here
   end
     ACTION
   end
@@ -276,7 +294,11 @@ class CrudGenerator < Rails::Generators::NamedBase
   def update_action
     <<~ACTION
   def update
-    # Write your real logic here
+    if @#{singular_name}.update(#{singular_name}_params)
+      redirect_to #{singular_name}_path(@#{singular_name}), notice: '#{humanized_name} was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
     ACTION
   end
@@ -284,7 +306,8 @@ class CrudGenerator < Rails::Generators::NamedBase
   def destroy_action
     <<~ACTION
   def destroy
-    # Write your real logic here
+    @#{singular_name}.destroy
+    redirect_to #{plural_name}_path, notice: '#{humanized_name} was successfully deleted.'
   end
     ACTION
   end
